@@ -1,0 +1,818 @@
+SERVER -> CLIENT: 
+SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
+SERVER -> CLIENT: 
+SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
+SERVER -> CLIENT: 220 smtp.gmail.com ESMTP ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+
+CLIENT -> SERVER: EHLO localhost
+
+SERVER -> CLIENT: 250-smtp.gmail.com at your service, [102.89.83.140]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250 SMTPUTF8
+
+CLIENT -> SERVER: STARTTLS
+
+SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+CLIENT -> SERVER: EHLO localhost
+
+SERVER -> CLIENT: 250-smtp.gmail.com at your service, [102.89.83.140]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+CLIENT -> SERVER: AUTH LOGIN
+
+SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+CLIENT -> SERVER: [credentials hidden]
+SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+CLIENT -> SERVER: [credentials hidden]
+SERVER -> CLIENT: 235 2.7.0 Accepted
+
+CLIENT -> SERVER: MAIL FROM:<oduolazayd@gmail.com>
+
+SERVER -> CLIENT: 250 2.1.0 OK ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+
+CLIENT -> SERVER: RCPT TO:<oyinlolaoduola001@gmail.com>
+
+SERVER -> CLIENT: 250 2.1.5 OK ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+
+CLIENT -> SERVER: DATA
+
+SERVER -> CLIENT: 354 Go ahead ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+
+CLIENT -> SERVER: Date: Fri, 17 Oct 2025 06:56:02 +0000
+
+CLIENT -> SERVER: To: oyinlolaoduola001@gmail.com
+
+CLIENT -> SERVER: From: BOTS <oduolazayd@gmail.com>
+
+CLIENT -> SERVER: Reply-To: BOTS <oduolazayd@gmail.com>
+
+CLIENT -> SERVER: Subject: =?iso-8859-1?Q?BOTS_-_OTP_Code_=F0=9F=94=92_2025-10-17_06:56:02?=
+
+CLIENT -> SERVER: Message-ID: <tKKcqdc0j6vDIOsNANc2PT16BsF04F2uXB2aGxD1IHQ@localhost>
+
+CLIENT -> SERVER: X-Mailer: PHPMailer 6.10.0 (https://github.com/PHPMailer/PHPMailer)
+
+CLIENT -> SERVER: MIME-Version: 1.0
+
+CLIENT -> SERVER: Content-Type: multipart/alternative;
+
+CLIENT -> SERVER:  boundary="b1=_tKKcqdc0j6vDIOsNANc2PT16BsF04F2uXB2aGxD1IHQ"
+
+CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: --b1=_tKKcqdc0j6vDIOsNANc2PT16BsF04F2uXB2aGxD1IHQ
+
+CLIENT -> SERVER: Content-Type: text/plain; charset=us-ascii
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: Your BOTS confirmation code is 379175. It expires in 5 minutes.
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: --b1=_tKKcqdc0j6vDIOsNANc2PT16BsF04F2uXB2aGxD1IHQ
+
+CLIENT -> SERVER: Content-Type: text/html; charset=iso-8859-1
+
+CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER:         <!DOCTYPE html>
+
+CLIENT -> SERVER:        <html lang="en" style="--white: #fff; --green-dark: #0a6836; --green-light: #0ab930; --green-lighter: #12a733; --black: #000;">
+
+CLIENT -> SERVER:        <head>
+
+CLIENT -> SERVER:        <meta charset="utf-8">
+
+CLIENT -> SERVER:        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+CLIENT -> SERVER:        <meta http-equiv="Content-Type" content="text/html;text/css; charset=UTF-8">
+
+CLIENT -> SERVER:        <title>BOTS - OTP Code 🔒 2025-10-17 06:56:02</title>
+
+CLIENT -> SERVER:        <style>.im{color:black !important}</style>
+
+CLIENT -> SERVER:        </head>
+
+CLIENT -> SERVER:        <div><div class="gmail_signature" dir="ltr" data-smartmail="gmail_signature">
+
+CLIENT -> SERVER:    <div dir="ltr">
+
+CLIENT -> SERVER:      <div dir="ltr">
+
+CLIENT -> SERVER:        <div dir="ltr">
+
+CLIENT -> SERVER:          <div dir="ltr">
+
+CLIENT -> SERVER:            <div dir="ltr">
+
+CLIENT -> SERVER:              <div dir="ltr">
+
+CLIENT -> SERVER:                <div dir="ltr">
+
+CLIENT -> SERVER:                  <div dir="ltr">
+
+CLIENT -> SERVER:                    <div style="font-size: small;">
+
+CLIENT -> SERVER:                      <div dir="ltr">
+
+CLIENT -> SERVER:                        <div dir="ltr">
+
+CLIENT -> SERVER:                          <div dir="ltr">
+
+CLIENT -> SERVER:                            <div dir="ltr">
+
+CLIENT -> SERVER:                              <div dir="ltr">
+
+CLIENT -> SERVER:                                <div dir="ltr">
+
+CLIENT -> SERVER:                                  <div dir="ltr">
+
+CLIENT -> SERVER:                                    <div dir="ltr">
+
+CLIENT -> SERVER:                                      <div dir="ltr">
+
+CLIENT -> SERVER:                                        <div dir="ltr">
+
+CLIENT -> SERVER:                                          <div dir="ltr">
+
+CLIENT -> SERVER:                                            <div dir="ltr">
+
+CLIENT -> SERVER:                                              <div dir="ltr">
+
+CLIENT -> SERVER:                                                <div style="color: #444444; font-family: 'Open Sans',sans-serif; font-size: 14px;">
+
+CLIENT -> SERVER:                                                  <br class="gmail-Apple-interchange-newline">
+
+CLIENT -> SERVER:                                                  <table style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; background-color: #fafeff;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                        <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                  <table class="row-content m_-7842681516560346380stack" style="border-radius: 0px; color: #000000; width: 600px; margin: 0px auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                        <td class="column" style="box-sizing: border-box; padding-bottom: 2px; padding-top: 6px; vertical-align: top; border: 0px initial initial;" width="100%">
+
+CLIENT -> SERVER:                                                                          <table class="image_block" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding-left: 10px; padding-top: 15px; width: 600px; padding-right: 0px;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box; line-height: 10px;" align="left">
+
+CLIENT -> SERVER:                                                                                    <div style="box-sizing: border-box; max-width: 180px;">
+
+CLIENT -> SERVER:                                                                                      <img style="box-sizing: border-box; display: block; height: auto; border: 0px; width: 140px;" src=" " width="140">
+
+CLIENT -> SERVER:                                                                                    </div>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="10">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box;" align="center">
+
+CLIENT -> SERVER:                                                                                    <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                                      <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; font-size: 1px; line-height: 1px; border-top: 1px solid #bbbbbb;">&nbsp;</td>
+
+CLIENT -> SERVER:                                                                                        </tr>
+
+CLIENT -> SERVER:                                                                                      </tbody>
+
+CLIENT -> SERVER:                                                                                    </table>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                        </td>
+
+CLIENT -> SERVER:                                                                      </tr>
+
+CLIENT -> SERVER:                                                                    </tbody>
+
+CLIENT -> SERVER:                                                                  </table>
+
+CLIENT -> SERVER:                                                                </td>
+
+CLIENT -> SERVER:                                                              </tr>
+
+CLIENT -> SERVER:                                                            </tbody>
+
+CLIENT -> SERVER:                                                          </table>
+
+CLIENT -> SERVER:                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                  <table class="row-content m_-7842681516560346380stack" style="color: #000000; width: 600px; margin: 0px auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                        <td class="column" style="box-sizing: border-box; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border: 0px initial initial;" width="100%">
+
+CLIENT -> SERVER:                                                                          <table style="word-break: break-word;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding: 30px 20px;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box; font-family: Arial, sans-serif;">
+
+CLIENT -> SERVER:                                                                                    <div style="box-sizing: border-box; font-size: 14px; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; line-height: 1.5;">
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 15px;">
+
+CLIENT -> SERVER:                                                                                        <span style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                          <strong style="box-sizing: border-box;">Hello Oyin Properties,</strong>
+
+CLIENT -> SERVER:                                                                                        </span>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 15px;">&nbsp;</p>
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 15px;color:black">Here’s your verification code to continue using your BOTS agent account.
+
+CLIENT -> SERVER:                                                                                       <br><br>Your OTP is:<br style="box-sizing: border-box;"><br style="box-sizing: border-box;"><span style="font-size: 30px;font-weight: bold;">379175</span>
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER:                                                                                       
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER:                                                                                        <br style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <br style="box-sizing: border-box;">If you have any questions, don't hesitate to reach us via our several support channels, or open a support ticket by sending a mail to <a style='text-decoration: none; color: #0ab930; letter-spacing: .2px; font-weight: 600;  font-size: 14px;'>support@bots.com</a>
+
+CLIENT -> SERVER:                                                                                        <br style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <br style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <style="box-sizing: border-box;">Thanks and best regards!<br> With ❤️ from your friends at<br> BOTS™
+
+CLIENT -> SERVER: </strong>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                    </div>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                        </td>
+
+CLIENT -> SERVER:                                                                      </tr>
+
+CLIENT -> SERVER:                                                                    </tbody>
+
+CLIENT -> SERVER:                                                                  </table>
+
+CLIENT -> SERVER:                                                                </td>
+
+CLIENT -> SERVER:                                                              </tr>
+
+CLIENT -> SERVER:                                                            </tbody>
+
+CLIENT -> SERVER:                                                          </table>
+
+CLIENT -> SERVER:                                                         
+
+CLIENT -> SERVER:                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                  <table class="row-content m_-7842681516560346380stack" style="color: #000000; width: 600px; margin: 0px auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                        <td class="column" style="box-sizing: border-box; padding-bottom: 0px; padding-top: 0px; vertical-align: top; border: 0px initial initial;" width="100%">
+
+CLIENT -> SERVER:                                                                          <table style="word-break: break-word;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding: 10px 5px;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box;
+
+CLIENT -> SERVER:                                                                                        
+
+CLIENT -> SERVER:                                                                                         
+
+CLIENT -> SERVER:                                                                                      
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                    </div>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                        </td>
+
+CLIENT -> SERVER:                                                                      </tr>
+
+CLIENT -> SERVER:                                                                    </tbody>
+
+CLIENT -> SERVER:                                                                  </table>
+
+CLIENT -> SERVER:                                                                </td>
+
+CLIENT -> SERVER:                                                              </tr>
+
+CLIENT -> SERVER:                                                            </tbody>
+
+CLIENT -> SERVER:                                                          </table>
+
+CLIENT -> SERVER:                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                  <table class="row-content m_-7842681516560346380stack" style="border-radius: 0px; color: #000000; width: 600px; margin: 0px auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+
+CLIENT -> SERVER:                                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                        <td class="column" style="box-sizing: border-box; padding-bottom: 0px; padding-top: 0px; vertical-align: top; border: 0px initial initial;" width="100%">
+
+CLIENT -> SERVER:                                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="20">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box;" align="center">
+
+CLIENT -> SERVER:                                                                                    <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                                      <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; font-size: 1px; line-height: 1px; border-top: 1px solid #bbbbbb;">&nbsp;</td>
+
+CLIENT -> SERVER:                                                                                        </tr>
+
+CLIENT -> SERVER:                                                                                      </tbody>
+
+CLIENT -> SERVER:                                                                                    </table>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding-bottom: 5px; padding-left: 20px; padding-right: 20px; text-align: center; width: 600px;">
+
+CLIENT -> SERVER:                                                                                  <h1 style="box-sizing: border-box; margin: 0px; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 29px; line-height: 34.8px; text-align: left;">
+
+CLIENT -> SERVER:                                                                                    <span style="box-sizing: border-box;">Download the BOTS app now!</span>
+
+CLIENT -> SERVER:                                                                                  </h1>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; vertical-align: middle; font-family: inherit; font-size: 14px; letter-spacing: 0px; padding-left: 20px; padding-right: 20px;">
+
+CLIENT -> SERVER:                                                                                  <table role="presentation" cellspacing="0" cellpadding="0" align="left">
+
+CLIENT -> SERVER:                                                                                    <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                      <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <td style="box-sizing: border-box; vertical-align: middle; text-align: center; padding: 5px 5px 5px 0px;">
+
+CLIENT -> SERVER:                                                                                          <a href="https://play.google.com/store/ " target="_blank" style="box-sizing: border-box; text-decoration-line: none;" rel="noopener">
+
+CLIENT -> SERVER:                                                                                            <img style="box-sizing: border-box; display: block; height: auto; margin: 0px auto; border: 0px;" src="https://ci3.googleusercontent.com/meips/ADKq_NafbOLXSMpslCJUTS0Jn0WOSxOX_lznP9vwKNLSY4xOIA-psEh0HHR5Ew_diXTCMFUutgBRPE69QzY36d0uoucVySIf18AoX5bF9ZZVDXLEGrTWEHgwOMb217X8i4zujCqX2jkLb36oYp4aJ5-npDhiCrtjKY2g0Klqo89Y24loHUEYlmfY2MT8sRQaicof=s0-d-e1-ft#https://userimg-assets-eu.customeriomail.com/images/client-env-143870/1696511131911_google_01HBZZ3176BDNYECDVQQPE1028.png" width="108" height="32" align="center">
+
+CLIENT -> SERVER:                                                                                          </a>
+
+CLIENT -> SERVER:                                                                                        </td>
+
+CLIENT -> SERVER:                                                                                        <td style="box-sizing: border-box; vertical-align: middle; text-align: center; padding: 5px 0px 5px 5px;">
+
+CLIENT -> SERVER:                                                                                          <a href="https://apps.apple.com/us/app/ " target="_blank" style="box-sizing: border-box; text-decoration-line: none;" rel="noopener">
+
+CLIENT -> SERVER:                                                                                            <img style="box-sizing: border-box; display: block; height: auto; margin: 0px auto; border: 0px;" src="https://ci3.googleusercontent.com/meips/ADKq_NYSJNQktRdHnRg90Zp2V6XUVhzuC9lljSh_r0Pc8ZB8NW8EcgHB2crP6WKFFQcZZA_35H8LMQzMpwn5WK0BNhKNFG0UzkipoZ9-H2skt52FIqHrpzbpaF78OwzoUrkrmGHYVgdSm2MD45ULyTO5BWu7wDBnW25puXVRSPnhUw54lC1-jhAaIQlocjAYApk=s0-d-e1-ft#https://userimg-assets-eu.customeriomail.com/images/client-env-143870/1696511206643_apple_01HBZZ59XJXPFSGZVSQR6JAR69.png" width="108" height="32" align="center">
+
+CLIENT -> SERVER:                                                                                          </a>
+
+CLIENT -> SERVER:                                                                                        </td>
+
+CLIENT -> SERVER:                                                                                      </tr>
+
+CLIENT -> SERVER:                                                                                    </tbody>
+
+CLIENT -> SERVER:                                                                                  </table>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="20">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box;" align="center">
+
+CLIENT -> SERVER:                                                                                    <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                                      <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; font-size: 1px; line-height: 1px; border-top: 1px solid #bbbbbb;">&nbsp;</td>
+
+CLIENT -> SERVER:                                                                                        </tr>
+
+CLIENT -> SERVER:                                                                                      </tbody>
+
+CLIENT -> SERVER:                                                                                    </table>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table class="social_block" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding-left: 20px; padding-right: 20px;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box;" align="left">
+
+CLIENT -> SERVER:                                                                                    <table class="social-table" style="display: inline-block;" role="presentation" border="0" width="108px" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                                      <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                        <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; padding: 0px 4px 0px 0px;">
+
+CLIENT -> SERVER:                                                                                            <a href="https://www.instagram.com/ " target="_blank" style="box-sizing: border-box;" rel="noopener">
+
+CLIENT -> SERVER:                                                                                              <img style="box-sizing: border-box; display: block; height: auto; border: 0px;" title="Instagram" src="https://ci3.googleusercontent.com/meips/ADKq_NYpBngxGw6wIwjfHvTxRT5lEodzU9mkQWpCO9rJfd9X3DMEoHefhZcG5Jsst5CsLYqVCJohvITS-2BFFTaUAuYplJm0kjH1We_qMMIqFCTRg-IMC4GpXf6k9t2MOBEU7ycPaosk4WlaArGKf8kIOQET3jn510wAMxyG4hX530MHPfY=s0-d-e1-ft#https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" alt="Instagram" width="32" height="32">
+
+CLIENT -> SERVER:                                                                                            </a>
+
+CLIENT -> SERVER:                                                                                          </td>
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; padding: 0px 4px 0px 0px;">
+
+CLIENT -> SERVER:                                                                                            <a href="https://www.facebook.com/ " target="_blank" style="box-sizing: border-box;" rel="noopener">
+
+CLIENT -> SERVER:                                                                                              <img style="box-sizing: border-box; display: block; height: auto; border: 0px;" title="Facebook" src="https://ci3.googleusercontent.com/meips/ADKq_Nbvqiy988FW3t8GaG7sEwHn6SWGf1s33CzVUbzs84_vj9kwsISLI8fK-rwdqd0KeOMQ_9TbgrtEyA_ZJtZ1l92HNEIGl4PU6ccEGpfHbrwmml9PVsh4yfsOutURaEPW4tyFVP2LGjqdYi_6S3z5CZTi6m7WKafUvHgraUDRYMXHKg=s0-d-e1-ft#https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" alt="Facebook" width="32" height="32">
+
+CLIENT -> SERVER:                                                                                            </a>
+
+CLIENT -> SERVER:                                                                                          </td>
+
+CLIENT -> SERVER:                                                                                          <td style="box-sizing: border-box; padding: 0px 4px 0px 0px;">
+
+CLIENT -> SERVER:                                                                                            <a href="" target="_blank" style="box-sizing: border-box;" rel="noopener">
+
+CLIENT -> SERVER:                                                                                              <img style="box-sizing: border-box; display: block; height: auto; border: 0px;" title="Twitter" src="https://ci3.googleusercontent.com/meips/ADKq_NZF8UbcGTE4ZU6Iy8JYXXWf18O4oVhMHBQcwlZt6iwY9BceVBO6WJx1iBr4U9qO7xN_GvlfqrZQrbt4TVPIpWezVZlaTjVmcMBs2-FxQ0sMebk1qKgMJHCuNdihshxr32nyCQvfPipGmMyuuPazTcsnKWo1sKOoka4EuOdg_G8S=s0-d-e1-ft#https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" alt="Twitter" width="32" height="32">
+
+CLIENT -> SERVER:                                                                                            </a>
+
+CLIENT -> SERVER:                                                                                          </td>
+
+CLIENT -> SERVER:                                                                                        </tr>
+
+CLIENT -> SERVER:                                                                                      </tbody>
+
+CLIENT -> SERVER:                                                                                    </table>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table style="word-break: break-word;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="20">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box; font-family: Arial, sans-serif;">
+
+CLIENT -> SERVER:                                                                                    <div style="box-sizing: border-box; font-size: 14px; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; color: #ffffff; line-height: 1.2;">
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px;">
+
+CLIENT -> SERVER:                                                                                        <span style="box-sizing: border-box; color: #000000;">Copyright © 2022-2025 BOTS, All rights reserved.</span>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px; text-align: center;">
+
+CLIENT -> SERVER:                                                                                        <span style="box-sizing: border-box;">&nbsp;</span>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px; text-align: center;">
+
+CLIENT -> SERVER:                                                                                        <span style="box-sizing: border-box;">&nbsp;</span>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px;">
+
+CLIENT -> SERVER:                                                                                        <span style="box-sizing: border-box; color: #000000;">All messages from BOTS, including our Customer Support team, will always come from an @ 
+
+CLIENT -> SERVER:                                                                                          <a href="http://localhost/bots" target="_blank" style="box-sizing: border-box;" rel="noopener">http://localhost/bots</a>&nbsp;email address. We will never ask you for account information like your login details and password via Email, Phone call, WhatsApp or Social media.
+
+CLIENT -> SERVER:                                                                                        </span>
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px;">&nbsp;</p>
+
+CLIENT -> SERVER:                                                                                      <p style="box-sizing: border-box; line-height: inherit; margin: 0px; font-size: 11px;">
+
+CLIENT -> SERVER:                                                                                       
+
+CLIENT -> SERVER:                                                                                      </p>
+
+CLIENT -> SERVER:                                                                                    </div>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                          <table class="image_block" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+
+CLIENT -> SERVER:                                                                            <tbody style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                              <tr style="box-sizing: border-box;">
+
+CLIENT -> SERVER:                                                                                <td style="box-sizing: border-box; padding-left: 10px; padding-right: 20px; width: 600px;">
+
+CLIENT -> SERVER:                                                                                  <div style="box-sizing: border-box; line-height: 20px;" align="left">
+
+CLIENT -> SERVER:                                                                                    <div style="box-sizing: border-box; max-width: 120px;">
+
+CLIENT -> SERVER:                                                                                      <img style="box-sizing: border-box; display: block; height: auto; border: 0px; width: 120px;" src=" " width="120">
+
+CLIENT -> SERVER:                                                                                    </div>
+
+CLIENT -> SERVER:                                                                                  </div>
+
+CLIENT -> SERVER:                                                                                </td>
+
+CLIENT -> SERVER:                                                                              </tr>
+
+CLIENT -> SERVER:                                                                            </tbody>
+
+CLIENT -> SERVER:                                                                          </table>
+
+CLIENT -> SERVER:                                                                        </td>
+
+CLIENT -> SERVER:                                                                      </tr>
+
+CLIENT -> SERVER:                                                                    </tbody>
+
+CLIENT -> SERVER:                                                                  </table>
+
+CLIENT -> SERVER:                                                                </td>
+
+CLIENT -> SERVER:                                                              </tr>
+
+CLIENT -> SERVER:                                                            </tbody>
+
+CLIENT -> SERVER:                                                          </table>
+
+CLIENT -> SERVER:                                                        </td>
+
+CLIENT -> SERVER:                                                      </tr>
+
+CLIENT -> SERVER:                                                    </tbody>
+
+CLIENT -> SERVER:                                                  </table>
+
+CLIENT -> SERVER:                                                </div>
+
+CLIENT -> SERVER:                                              </div>
+
+CLIENT -> SERVER:                                            </div>
+
+CLIENT -> SERVER:                                          </div>
+
+CLIENT -> SERVER:                                        </div>
+
+CLIENT -> SERVER:                                      </div>
+
+CLIENT -> SERVER:                                    </div>
+
+CLIENT -> SERVER:                                  </div>
+
+CLIENT -> SERVER:                                </div>
+
+CLIENT -> SERVER:                              </div>
+
+CLIENT -> SERVER:                            </div>
+
+CLIENT -> SERVER:                          </div>
+
+CLIENT -> SERVER:                        </div>
+
+CLIENT -> SERVER:                      </div>
+
+CLIENT -> SERVER:                    </div>
+
+CLIENT -> SERVER:                  </div>
+
+CLIENT -> SERVER:                </div>
+
+CLIENT -> SERVER:              </div>
+
+CLIENT -> SERVER:            </div>
+
+CLIENT -> SERVER:          </div>
+
+CLIENT -> SERVER:        </div>
+
+CLIENT -> SERVER:      </div>
+
+CLIENT -> SERVER:    </div>
+
+CLIENT -> SERVER:  </div>
+
+CLIENT -> SERVER: </div>
+
+CLIENT -> SERVER:    
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: --b1=_tKKcqdc0j6vDIOsNANc2PT16BsF04F2uXB2aGxD1IHQ--
+
+CLIENT -> SERVER: 
+
+CLIENT -> SERVER: .
+
+SERVER -> CLIENT: 250 2.0.0 OK  1760684166 ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+
+CLIENT -> SERVER: QUIT
+
+SERVER -> CLIENT: 221 2.0.0 closing connection ffacd0b85a97d-426ce5e10e8sm39115086f8f.39 - gsmtp
+

@@ -1,0 +1,2084 @@
+{
+	"info": {
+		"_postman_id": "ba3dc0a7-ff7a-4db1-8bc5-aa7c40380675",
+		"name": "Bots",
+		"description": "orderify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40960729"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "create_admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "Blacksulzee@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(Blacksulzee12)",
+											"type": "text"
+										},
+										{
+											"key": "fname",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "lname",
+											"value": "sulzee",
+											"type": "text"
+										},
+										{
+											"key": "phoneno",
+											"value": "08107816754",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Auth/create_admin.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Auth",
+										"create_admin.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "blacksulzee@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(Blacksulzee12)",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Auth/login.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Auth",
+										"login.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forget_password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NTg5Nzk0OTYsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NTg5Nzk0OTYsImV4cCI6MTc1OTA2NTg5NiwidXNlcnRva2VuIjoiQk9UU2tnUlhhQkt0VG5SNjhsY25pMVV5Z1BleXBXanJ6In0.XH0RvUVfWiajwNyquVEuLCTgou6y9q8hrF5A68ym4dr_-loBmv0nXVPbcgi5R1M3TZ9C8hHf8vUWKXvqW-u3fA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "Blacksulzee@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Auth/forget_password.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Auth",
+										"forget_password.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Agents",
+					"item": [
+						{
+							"name": "View Pending Kyc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjE2OTM0ODUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjE2OTM0ODUsImV4cCI6MTc2MTc3OTg4NSwidXNlcnRva2VuIjoiQk9UU1ZQcTNDTFZRNGNrUUFBRDFWU3k3aVEycjB4MFR3In0.AQPFj5dnDU0nPLVRAKGAAagDgX53HPgEd8xy_EFodhHVM78Ohe7Xu2_bmVZ8a3FU47Q5FmgrKSA08PlLzvQNBQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Agents/view_pending_kyc.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Agents",
+										"view_pending_kyc.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Single Kyc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg4ODcsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg4ODcsImV4cCI6MTc2MjM1NTI4NywidXNlcnRva2VuIjoiQk9UU0phaUdhYXZCcFhtc1EyYUlpeUR6VEZnWm9OVUVzIn0.gwnoqcO-BD_H8DCaJYsM-rWMlb0ff3vj15QPjxaUzis7pLKXGavPlOEXRB5SKqaY9E7UYNT0Py67a3rdg03iwQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "agent_id",
+											"value": "4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Agents/view_single_kyc.php?agent_id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Agents",
+										"view_single_kyc.php"
+									],
+									"query": [
+										{
+											"key": "agent_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Kyc",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg4ODcsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg4ODcsImV4cCI6MTc2MjM1NTI4NywidXNlcnRva2VuIjoiQk9UU0phaUdhYXZCcFhtc1EyYUlpeUR6VEZnWm9OVUVzIn0.gwnoqcO-BD_H8DCaJYsM-rWMlb0ff3vj15QPjxaUzis7pLKXGavPlOEXRB5SKqaY9E7UYNT0Py67a3rdg03iwQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "agent_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "decision",
+											"value": "approved",
+											"type": "text"
+										},
+										{
+											"key": "reason",
+											"value": "All Agent Details Verified Successfully",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Agents/verify_kyc.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Agents",
+										"verify_kyc.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Property",
+					"item": [
+						{
+							"name": "Approve Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjU1NDgxNDYsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjU1NDgxNDYsImV4cCI6MTc2NTYzNDU0NiwidXNlcnRva2VuIjoiQk9UU3BrUEhkcElhSDBjd0UxSWNibHB6MXQ0OTMxOFVmIn0.f9oBilYV65rYQ58NMguAAj15DRAAnXRNlqtcF_srqbbWlgMpNtDKY-389KcxQHr1Hb1U83bpEslz9QaMoD_pqA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "property_id",
+											"value": "9",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Properties/approve.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Properties",
+										"approve.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List All Property",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIzNTM1NjAsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIzNTM1NjAsImV4cCI6MTc2MjQzOTk2MCwidXNlcnRva2VuIjoiQk9UU3JSUk1PeUhsMFNoUGIzQVRpbVlOeWtZaFdtZHZ5In0.4Cpop0QBYCN_qZl6I9IF2E4Z9GVmYJtO42amo35SHyO_sFsOfPfPtwYtGHC95cDk7G2rdzfshsp0xe_oj3vf6Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Properties/list_all.php?status=pending&page=1&limit=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Properties",
+										"list_all.php"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reject Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIzNTM1NjAsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIzNTM1NjAsImV4cCI6MTc2MjQzOTk2MCwidXNlcnRva2VuIjoiQk9UU3JSUk1PeUhsMFNoUGIzQVRpbVlOeWtZaFdtZHZ5In0.4Cpop0QBYCN_qZl6I9IF2E4Z9GVmYJtO42amo35SHyO_sFsOfPfPtwYtGHC95cDk7G2rdzfshsp0xe_oj3vf6Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "reason",
+											"value": "Does not meet our required standaards",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Properties/reject.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Properties",
+										"reject.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIzNTM1NjAsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIzNTM1NjAsImV4cCI6MTc2MjQzOTk2MCwidXNlcnRva2VuIjoiQk9UU3JSUk1PeUhsMFNoUGIzQVRpbVlOeWtZaFdtZHZ5In0.4Cpop0QBYCN_qZl6I9IF2E4Z9GVmYJtO42amo35SHyO_sFsOfPfPtwYtGHC95cDk7G2rdzfshsp0xe_oj3vf6Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "flagged",
+											"type": "text"
+										},
+										{
+											"key": "reason",
+											"value": "Looks somehow Suspicious",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/Properties/update.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"Properties",
+										"update.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "USERS",
+					"item": [
+						{
+							"name": "Verify Kyc",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5MzExOTEsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5MzExOTEsImV4cCI6MTc2NTAxNzU5MSwidXNlcnRva2VuIjoiQk9UU2FFbEhZQWVhb2VLaHBtQVNWdFBXYlNUUjVlTG9oIn0.Di1QVo33DPrDtl7XS5n4CWaKxMPknw_5l4i3M8Qg5irLQagTVYJ4LsfLByMplWa3sXIeQu5CETb4UbQ6qpMlXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "decision",
+											"value": "approved",
+											"type": "text"
+										},
+										{
+											"key": "reason",
+											"value": "User Credentials Successfully Matched User Kyc",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/admin/USERS/verify_kyc.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"admin",
+										"USERS",
+										"verify_kyc.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bookings",
+					"item": [
+						{
+							"name": "List All",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "View Single",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "approve",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "reject",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Completed",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Dashboard Summary",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Agents",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "agency_name",
+											"value": "JOHNSONS HOMES AND PROPERTIES",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "johnsonamira559@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(IJohnsons12)",
+											"type": "text"
+										},
+										{
+											"key": "phoneno",
+											"value": "+44 7479 229 638",
+											"type": "text"
+										},
+										{
+											"key": "business_address",
+											"value": "42 Kingsbury Avenue Manchester",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Greater Manchester",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Manchester",
+											"type": "text"
+										},
+										{
+											"key": "postal_code",
+											"value": "M14 6PR",
+											"type": "text"
+										},
+										{
+											"key": "streetname",
+											"value": "Kingsbury",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "United Kingdom",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/register.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"register.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Visualization Script",
+											"// Visualization Script",
+											"const template = `",
+											"<canvas id=\"myChart\" height=\"75\"></canvas>",
+											"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script>",
+											"<script>",
+											"    var ctx = document.getElementById(\"myChart\");",
+											"    var myChart = new Chart(ctx, {",
+											"        type: \"bar\",",
+											"        data: {",
+											"            labels: [], // Will be filled by pm.getData",
+											"            datasets: [{",
+											"                label: 'Values',",
+											"                data: [],",
+											"                backgroundColor: 'rgba(54, 162, 235, 0.5)',",
+											"                borderColor: 'rgba(54, 162, 235, 1)',",
+											"                borderWidth: 1",
+											"            }]",
+											"        },",
+											"        options: {",
+											"            legend: { display: true },",
+											"            title: {",
+											"                display: true,",
+											"                text: 'Response Data Chart'",
+											"            },",
+											"            scales: {",
+											"                xAxes: [{",
+											"                    display: true,",
+											"                    scaleLabel: {",
+											"                        display: true,",
+											"                        labelString: 'Keys'",
+											"                    }",
+											"                }],",
+											"                yAxes: [{",
+											"                    display: true,",
+											"                    scaleLabel: {",
+											"                        display: true,",
+											"                        labelString: 'Values'",
+											"                    },",
+											"                    ticks: {",
+											"                        beginAtZero: true",
+											"                    }",
+											"                }]",
+											"            }",
+											"        }",
+											"    });",
+											"",
+											"    pm.getData(function (err, value) {",
+											"        myChart.data.labels = value.labels;",
+											"        myChart.data.datasets[0].data = value.data;",
+											"        myChart.update();",
+											"    });",
+											"</script>`;",
+											"",
+											"function constructVisualizerPayload() {",
+											"    let json = {};",
+											"    try {",
+											"        json = pm.response.json();",
+											"    } catch (e) {",
+											"        return { labels: [], data: [] };",
+											"    }",
+											"    // If the response is an array of objects with a common numeric property, chart that property",
+											"    if (Array.isArray(json) && json.length > 0 && typeof json[0] === 'object') {",
+											"        // Find the first numeric property",
+											"        const keys = Object.keys(json[0]);",
+											"        let valueKey = keys.find(k => typeof json[0][k] === 'number');",
+											"        if (!valueKey) return { labels: [], data: [] };",
+											"        return {",
+											"            labels: json.map((item, i) => item.name || item.id || `Item ${i+1}`),",
+											"            data: json.map(item => item[valueKey])",
+											"        };",
+											"    }",
+											"    // If the response is an object with numeric values, chart those",
+											"    if (typeof json === 'object' && !Array.isArray(json)) {",
+											"        const keys = Object.keys(json).filter(k => typeof json[k] === 'number');",
+											"        return {",
+											"            labels: keys,",
+											"            data: keys.map(k => json[k])",
+											"        };",
+											"    }",
+											"    return { labels: [], data: [] };",
+											"}",
+											"",
+											"pm.visualizer.set(template, constructVisualizerPayload());",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "johnsonamira559@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(IJohnsons12)",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/loginapp.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"loginapp.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "send verification",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg1MTUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg1MTUsImV4cCI6MTc2MjM1NDkxNSwidXNlcnRva2VuIjoiQk9UU0JMTEUzWE5XdmQ0WjJoQ1BlWU43TnZCbmNuTHpkIn0.B4jnW0qajVmRSNqKySAY6lL2QgxWWKn_ofGwa5M1Xd3K_oud_R9l7e8U0E1_YpZQmbTbJBbx40txd9yIt9EN4A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/send_verification.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"send_verification.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "verify code",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg1MTUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg1MTUsImV4cCI6MTc2MjM1NDkxNSwidXNlcnRva2VuIjoiQk9UU0JMTEUzWE5XdmQ0WjJoQ1BlWU43TnZCbmNuTHpkIn0.B4jnW0qajVmRSNqKySAY6lL2QgxWWKn_ofGwa5M1Xd3K_oud_R9l7e8U0E1_YpZQmbTbJBbx40txd9yIt9EN4A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "code",
+											"value": "130717",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/verify_code.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"verify_code.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Forget Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjEzMzc5NzIsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjEzMzc5NzIsImV4cCI6MTc2MTQyNDM3MiwidXNlcnRva2VuIjoiQk9UUzdmWUpkYXZlSnE2eWw2R0V1aWtkR1B6MlBON2RRIn0.T_DBwoX2q2S5GBzWrtO2vtG8iIyCSUp8M-7xmnjhVgiOdhXfqndJ_MxkMBkVuBjevermrITI1TFiDguzZCOptQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/forget_password.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"forget_password.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "otp",
+											"value": "971742",
+											"type": "text"
+										},
+										{
+											"key": "newpassword",
+											"value": "Johnson12",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Auth/reset_password.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Auth",
+										"reset_password.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PROFILE",
+					"item": [
+						{
+							"name": "View Profile",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjEzNDcyNzcsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjEzNDcyNzcsImV4cCI6MTc2MTQzMzY3NywidXNlcnRva2VuIjoiQk9UU0JSMjdLd2d5blBiRERUdzA3ZGJBVW1TdDNNZXJaIn0.pDhII2IT0BbAv2_IBW7ghWEDEI-RdNKhvo0aQbpV8r3d1VkvRjWwy4WXtLkkjP0w155y13-g4tYhguRFBvMMLQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "agency_name",
+											"value": "JOHNSONS PROPERTIES",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/profile/view_profile.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"profile",
+										"view_profile.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Profile",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjE2MDc2MTcsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjE2MDc2MTcsImV4cCI6MTc2MTY5NDAxNywidXNlcnRva2VuIjoiQk9UU1l5NnhGeGl1QVFLTW9uVjFWSjZXRmNrTmpBeEVLIn0.2fiWEuiu0Pa2hXyWgLKMhPnakKBRDXQgvInvZiFS1eMuB1ygCO_no0jpQzj1zjRn7BJ5j27SRGUwT16rD1yPnQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "agency_name",
+											"value": "JOHNSONS PROPERTY",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "johnsonamira559@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "phoneno",
+											"value": "+447479229638",
+											"type": "text"
+										},
+										{
+											"key": "business_address",
+											"value": "42 Kingsbury Avenue Manchester",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Greater Manchester",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Manchester",
+											"type": "text"
+										},
+										{
+											"key": "postal_code",
+											"value": "M14 6PR",
+											"type": "text"
+										},
+										{
+											"key": "street_name",
+											"value": "Kingsbury",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "United Kingdom",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/profile/update_profile.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"profile",
+										"update_profile.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KYC",
+					"item": [
+						{
+							"name": "Submit Kyc",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg1MTUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg1MTUsImV4cCI6MTc2MjM1NDkxNSwidXNlcnRva2VuIjoiQk9UU0JMTEUzWE5XdmQ0WjJoQ1BlWU43TnZCbmNuTHpkIn0.B4jnW0qajVmRSNqKySAY6lL2QgxWWKn_ofGwa5M1Xd3K_oud_R9l7e8U0E1_YpZQmbTbJBbx40txd9yIt9EN4A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "business_name",
+											"value": "JOHNSONS PROPERTIES",
+											"type": "text"
+										},
+										{
+											"key": "cac_number",
+											"value": "RC-9282727",
+											"type": "text"
+										},
+										{
+											"key": "business_address",
+											"value": "42 Kingsbury Avenue Manchester",
+											"type": "text"
+										},
+										{
+											"key": "document_front",
+											"value": "https://cloudstorage.com/docs/kyc_doc_front.pdf",
+											"type": "text"
+										},
+										{
+											"key": "document_back",
+											"value": "https://cloudstorage.com/docs/kyc_doc_front.pdf",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Lagos",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Lagos",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "Nigeria",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/KYC/submit_kyc.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"KYC",
+										"submit_kyc.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Kyc Status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIyNjg1MTUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIyNjg1MTUsImV4cCI6MTc2MjM1NDkxNSwidXNlcnRva2VuIjoiQk9UU0JMTEUzWE5XdmQ0WjJoQ1BlWU43TnZCbmNuTHpkIn0.B4jnW0qajVmRSNqKySAY6lL2QgxWWKn_ofGwa5M1Xd3K_oud_R9l7e8U0E1_YpZQmbTbJBbx40txd9yIt9EN4A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/KYC/view_kyc_status.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"KYC",
+										"view_kyc_status.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Properties",
+					"item": [
+						{
+							"name": "Create Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjU1NDM0ODEsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjU1NDM0ODEsImV4cCI6MTc2NTYyOTg4MSwidXNlcnRva2VuIjoiQk9UU3l0d0NzS1lNaHZyenVPU0hHcUV4cEFwSkxvc3V2In0.YFYfdtUPi0pDYSLD7uGYhwrPk6nHhdycTd5TTRv6nRcInwZ45P6aN5T9ZyBAfZSQzoiytVHkfRV7beIR-zY0XQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "6 Bedroom  Apartment",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "A spacious 6 bedroom House Featuring all Real Accomodation Features ",
+											"type": "text"
+										},
+										{
+											"key": "property_type",
+											"value": "apartment",
+											"type": "text"
+										},
+										{
+											"key": "property_category",
+											"value": "rental",
+											"type": "text"
+										},
+										{
+											"key": "bed",
+											"value": "6",
+											"type": "text"
+										},
+										{
+											"key": "bath",
+											"value": "6",
+											"type": "text"
+										},
+										{
+											"key": "balcony",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "hall",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "kitchen",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "floor",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "asize",
+											"value": "4440 sqm",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "3500000",
+											"type": "text"
+										},
+										{
+											"key": "features",
+											"value": "Parking, Water supply,  Cctv Camera, Security Post, ",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Ilorin",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Kwara",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "Tanke",
+											"type": "text"
+										},
+										{
+											"key": "images[]",
+											"type": "file",
+											"src": [
+												"postman-cloud:///1f0d7622-e693-48e0-8ddb-ba98b5568913",
+												"postman-cloud:///1f0d7624-b598-4450-8c24-7823c9178d9c"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Properties/create_property.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Properties",
+										"create_property.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Property Details",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIxNzU1MDMsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIxNzU1MDMsImV4cCI6MTc2MjI2MTkwMywidXNlcnRva2VuIjoiQk9UU01sdzYxamZCaDlQMkVJZG1OMmtsR0s1N2ZZemo2In0.52vchBzm6g8HnHttZXItLs4pdPL_ji3NOkgZPDkrhtNSv5UKf6QT_dOL6vcLc00FxDisV7Kqxsz6uvsJYwQE4g",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Properties/view_my_properties.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Properties",
+										"view_my_properties.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Property Details",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIxNzU1MDMsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIxNzU1MDMsImV4cCI6MTc2MjI2MTkwMywidXNlcnRva2VuIjoiQk9UU01sdzYxamZCaDlQMkVJZG1OMmtsR0s1N2ZZemo2In0.52vchBzm6g8HnHttZXItLs4pdPL_ji3NOkgZPDkrhtNSv5UKf6QT_dOL6vcLc00FxDisV7Kqxsz6uvsJYwQE4g",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "08",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Properties/view_property.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Properties",
+										"view_property.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIzMzQwMzMsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIzMzQwMzMsImV4cCI6MTc2MjQyMDQzMywidXNlcnRva2VuIjoiQk9UU0tJZDJzWTFXbk05cjExb3dEb0Q5RVl1UHllanp6In0.OshNU_J_UrgXSUmSUNkgsqpYFuiqUimcj_b5ehgNrc9CUco_3MWo1JI32CmJmc9jdwjT8r-1GcakuZJZaSmflg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Properties/delete_property.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Properties",
+										"delete_property.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjIzMzQwMzMsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjIzMzQwMzMsImV4cCI6MTc2MjQyMDQzMywidXNlcnRva2VuIjoiQk9UU0tJZDJzWTFXbk05cjExb3dEb0Q5RVl1UHllanp6In0.OshNU_J_UrgXSUmSUNkgsqpYFuiqUimcj_b5ehgNrc9CUco_3MWo1JI32CmJmc9jdwjT8r-1GcakuZJZaSmflg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "4 Bedroom House",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "15000000",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "A spacious 4-bedroom house with modern fittings",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "Gwawalada",
+											"type": "text"
+										},
+										{
+											"key": "property_type",
+											"value": "house",
+											"type": "text"
+										},
+										{
+											"key": "property_category",
+											"value": "sale",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/agents/Properties/update_property.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"agents",
+										"Properties",
+										"update_property.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fname",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "lname",
+											"value": "Zayd",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "Blacksulzee@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(Blacksulzee12)",
+											"type": "text"
+										},
+										{
+											"key": "phoneno",
+											"value": "09050655636",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "Nigeria",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Oyo",
+											"type": "text"
+										},
+										{
+											"key": "streetname",
+											"value": "New Garage",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "postal_code",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/register.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"register.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "Blacksulzee@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "(Sulzee12)",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/loginapp.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"loginapp.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send verification",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjMwMjU0ODUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjMwMjU0ODUsImV4cCI6MTc2MzExMTg4NSwidXNlcnRva2VuIjoiQk9UUzg3amFtWnRFQTlJZUN1dmJPcFJwellPTnpKdkQxIn0.uwVsqgh-a3zP0srCvdQjQwib1GpxOCwr_Y-MzSVaJp-TFtilRsuDtANIox_A8avkppwPy_g9f42xL6Pl4j0Oiw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/send_verification.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"send_verification.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify code",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjMwMjU0ODUsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjMwMjU0ODUsImV4cCI6MTc2MzExMTg4NSwidXNlcnRva2VuIjoiQk9UUzg3amFtWnRFQTlJZUN1dmJPcFJwellPTnpKdkQxIn0.uwVsqgh-a3zP0srCvdQjQwib1GpxOCwr_Y-MzSVaJp-TFtilRsuDtANIox_A8avkppwPy_g9f42xL6Pl4j0Oiw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "code",
+											"value": "317389",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/verify_code.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"verify_code.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Forget Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5Mjk2MzYsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5Mjk2MzYsImV4cCI6MTc2NTAxNjAzNiwidXNlcnRva2VuIjoiQk9UU1hSeUFaRmxQNDJBYmJzendJdkNrRWNLd1IzOUZxIn0.t4eRLCOyjQG_GcnAddP9G-u-4gwRjQd8q3cMAWfimWsED60cQw21_blvz77GmM16JSOI4Ber40BdLcEKxfhZjg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "type",
+											"value": "email",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/forget_password.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"forget_password.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5Mjk2MzYsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5Mjk2MzYsImV4cCI6MTc2NTAxNjAzNiwidXNlcnRva2VuIjoiQk9UU1hSeUFaRmxQNDJBYmJzendJdkNrRWNLd1IzOUZxIn0.t4eRLCOyjQG_GcnAddP9G-u-4gwRjQd8q3cMAWfimWsED60cQw21_blvz77GmM16JSOI4Ber40BdLcEKxfhZjg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "otp",
+											"value": "982485",
+											"type": "text"
+										},
+										{
+											"key": "newpassword",
+											"value": "(Sulzee12)",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Auth/reset_password.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Auth",
+										"reset_password.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KYC",
+					"item": [
+						{
+							"name": "Submit Kyc",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5MzExOTEsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5MzExOTEsImV4cCI6MTc2NTAxNzU5MSwidXNlcnRva2VuIjoiQk9UU2FFbEhZQWVhb2VLaHBtQVNWdFBXYlNUUjVlTG9oIn0.Di1QVo33DPrDtl7XS5n4CWaKxMPknw_5l4i3M8Qg5irLQagTVYJ4LsfLByMplWa3sXIeQu5CETb4UbQ6qpMlXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id_type",
+											"value": "NIN",
+											"type": "text"
+										},
+										{
+											"key": "id_number",
+											"value": "58768974671",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "No 24, Gere Alimi Bridge Off Ilorin Airport Ilorin",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Ilorin",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "Kwara",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "Nigeria",
+											"type": "text"
+										},
+										{
+											"key": "id_front",
+											"type": "file",
+											"src": "postman-cloud:///1f0d1c6a-3ff1-4b20-8b49-aafdd20ed056"
+										},
+										{
+											"key": "id_back",
+											"type": "file",
+											"src": "postman-cloud:///1f0d1c6a-3ff1-4b20-8b49-aafdd20ed056"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/KYC/kyc_submission.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"KYC",
+										"kyc_submission.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Kyc Status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5MzExOTEsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5MzExOTEsImV4cCI6MTc2NTAxNzU5MSwidXNlcnRva2VuIjoiQk9UU2FFbEhZQWVhb2VLaHBtQVNWdFBXYlNUUjVlTG9oIn0.Di1QVo33DPrDtl7XS5n4CWaKxMPknw_5l4i3M8Qg5irLQagTVYJ4LsfLByMplWa3sXIeQu5CETb4UbQ6qpMlXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/KYC/view_kyc_status.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"KYC",
+										"view_kyc_status.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "BOOKINGS",
+					"item": [
+						{
+							"name": "Request Visit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjU3OTI5MzgsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjU3OTI5MzgsImV4cCI6MTc2NTg3OTMzOCwidXNlcnRva2VuIjoiQk9UU2FrWk12b2dVc0RpSEVhRVBCN3N4NndZeldUTG5PIn0.CKL-OUN1pRHo8pUWxasF7Yn1ajOV2S1VK41xWRbXOy66gVG46ukS4sxHunfar-jkMI7eUqrdpPCD8WsqxEcAhA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "property_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "visit_date",
+											"value": "2025-12-22",
+											"type": "text"
+										},
+										{
+											"key": "scheduled_time",
+											"value": "10am",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Bookings/request_visit.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Bookings",
+										"request_visit.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Booking",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjU3OTI5MzgsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjU3OTI5MzgsImV4cCI6MTc2NTg3OTMzOCwidXNlcnRva2VuIjoiQk9UU2FrWk12b2dVc0RpSEVhRVBCN3N4NndZeldUTG5PIn0.CKL-OUN1pRHo8pUWxasF7Yn1ajOV2S1VK41xWRbXOy66gVG46ukS4sxHunfar-jkMI7eUqrdpPCD8WsqxEcAhA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "property_id",
+											"value": "9",
+											"type": "text"
+										},
+										{
+											"key": "visit_date",
+											"value": "2025-12-22",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2025-12-25",
+											"type": "text"
+										},
+										{
+											"key": "notes",
+											"value": "Interested in touring",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Bookings/create_booking.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Bookings",
+										"create_booking.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Bookings",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NjQ5MzExOTEsImlzcyI6IkJvdHNwYXlAMjAyNV9zZXJ2ZXIiLCJuYmYiOjE3NjQ5MzExOTEsImV4cCI6MTc2NTAxNzU5MSwidXNlcnRva2VuIjoiQk9UU2FFbEhZQWVhb2VLaHBtQVNWdFBXYlNUUjVlTG9oIn0.Di1QVo33DPrDtl7XS5n4CWaKxMPknw_5l4i3M8Qg5irLQagTVYJ4LsfLByMplWa3sXIeQu5CETb4UbQ6qpMlXg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/BOTS_PROJECT/api/users/Bookings/my_bookings.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"BOTS_PROJECT",
+										"api",
+										"users",
+										"Bookings",
+										"my_bookings.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
