@@ -65,7 +65,7 @@ try {
 
     //Generate password reset OTP
     $verificationCode = random_int(100000, 999999);
-    $expiryTimestamp = time() + (10 * 60); // 10 minutes expiry
+    $expiryTimestamp = time() + 60; // 60 seconds expiry
     $expiryTime = date('Y-m-d H:i:s', $expiryTimestamp);
 
     //verification_type = 3 (Forgot Password)
@@ -122,7 +122,7 @@ try {
         $maindata = [
             "sent_to" => $destination,
             "type" => $sendtype,
-            "expires_in_seconds" => 600
+            "expires_in_seconds" => 60
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$password_reset_otp);
     } else {

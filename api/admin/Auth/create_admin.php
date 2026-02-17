@@ -43,10 +43,10 @@ if(getenv('REQUEST_METHOD') == $api_method){
         ]
     ])>0){
         // checking if data is valid
-        $api_status_call->respondBadRequest(API_User_Response::dataAlreadyExist("Email"));
+        $api_status_call->respondBadRequest(API_User_Response::$dataAlreadyExist("Email"));
     } 
     elseif (!$utility_class_call->isEmailValid($email)) {
-        $api_status_call->respondBadRequest(API_User_Response::dataInvalid('Email'));
+        $api_status_call->respondBadRequest(API_User_Response::$data_InValid('Email'));
     } elseif ($_ENV["ALLOW_USER_TO_LOGIN_REGISTER"] ==0){
         $api_status_call->respondNotCompleted(API_User_Response::$serverUnderMaintainance);
     } else{

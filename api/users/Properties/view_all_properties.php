@@ -27,29 +27,57 @@ if (getenv("REQUEST_METHOD") === $api_method) {
         $limit = isset($data["limit"]) ? max(1, (int)$data["limit"]) : 20;
         $offset = ($page - 1) * $limit;
 
-        // Fetch total count using direct SQL
-        $countSql = "
-            SELECT COUNT(*) as total
-            FROM properties
-            WHERE status = 'approved'
-              AND deleted_at IS NULL
-        ";
-        $countResult = $db_call_class->selectRows($countSql);
+        $whereConditions = [[
+            ['column' => 'status', 'operator' => '=', 'value' => 'approved'],
+            ['column' => 'deleted_at', 'operator' => 'IS', 'value' => 'NULL']
+        ]];
+
+        // Fetch total count
+        $countResult = $db_call_class->selectRows(
+            "properties",
+            ["COUNT(*) AS total"],
+            $whereConditions
+        );
         $total = $countResult[0]['total'] ?? 0;
 
-        // Fetch properties with pagination using direct SQL
-        $propertiesSql = "
-            SELECT id, title, description, price, property_category, property_type, bed, bath, balc, hall, kitc, floor, asize, city, state, location, feature, images, thumbnail, featured, verified, created_at, updated_at
-            FROM properties
-            WHERE status = 'approved'
-              AND deleted_at IS NULL
-            ORDER BY featured DESC, created_at DESC
-            LIMIT :limit OFFSET :offset
-        ";
-        $paginatedProperties = $db_call_class->selectRows($propertiesSql, [
-            ':limit' => $limit,
-            ':offset' => $offset
-        ]);
+        // Fetch properties with pagination
+        $paginatedProperties = $db_call_class->selectRows(
+            "properties",
+            [
+                "id",
+                "agent_id",
+                "agency_name",
+                "title",
+                "description",
+                "price",
+                "property_category",
+                "property_type",
+                "bed",
+                "bath",
+                "balc",
+                "hall",
+                "kitc",
+                "floor",
+                "asize",
+                "city",
+                "state",
+                "location",
+                "feature",
+                "images",
+                "thumbnail",
+                "featured",
+                "verified",
+                "created_at",
+                "updated_at"
+            ],
+            $whereConditions,
+            [
+                'limit' => $limit,
+                'pageno' => $page,
+                'orderBy' => 'featured',
+                'orderDirection' => 'DESC'
+            ]
+        );
 
         if ($utility_class_call->input_is_invalid($paginatedProperties)) {
             $paginatedProperties = [];

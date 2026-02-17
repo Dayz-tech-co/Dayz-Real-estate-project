@@ -52,11 +52,9 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         if ($page < 1) $page = 1;
         if ($limit < 1) $limit = 10;
 
-        //Build conditions
+        // Build conditions
         $conditions = [[
-            ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id],
-            ['column' => 'is_deleted', 'operator' => '=', 'value' => 0]
-
+            ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id]
         ]];
 
         //Count total records safely
@@ -68,13 +66,17 @@ if (getenv('REQUEST_METHOD') === $api_method) {
 
         $total = isset($totalRow[0]['total']) ? (int)$totalRow[0]['total'] : 0;
 
-        //Fetch paginated properties (your pattern)
+        // Fetch paginated properties
         $properties = $db_call_class->selectRows(
             "properties",
             "id, title, description, property_type, property_category, bed, bath, balc AS balcony, hall, kitc, floor, asize AS area_size, price, feature, city, state, location, agent_id, status, created_at, thumbnail, images, verified, sold_status, updated_at",
             $conditions,
-            $limit,
-            $offset
+            [
+                'limit' => $limit,
+                'pageno' => $page,
+                'orderBy' => 'id',
+                'orderDirection' => 'DESC'
+            ]
         );
 
         if ($utility_class_call->input_is_invalid($properties)) {

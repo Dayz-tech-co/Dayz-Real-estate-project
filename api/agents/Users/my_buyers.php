@@ -47,7 +47,6 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         //Pagination Inputs
         $page  = isset($_POST['page']) ? (int)$_POST['page'] : 1;
         $limit = isset($_POST['limit']) ? (int)$_POST['limit'] : 10;
-        $offset = ($page - 1) * $limit;
         if ($page < 1) $page = 1;
         if ($limit < 1) $limit = 10;
 
@@ -64,25 +63,29 @@ if (getenv('REQUEST_METHOD') === $api_method) {
             $conditions[0][] = ['column' => 'status', 'operator' => '=', 'value' => $status];
         }
 
-        //Count Total Unique Buyers
-        $countBuyers = $db_call_class->runQuery(
-            "SELECT COUNT(DISTINCT user_id) AS total FROM transactions WHERE agent_id = :agent_id" .
-                (!empty($status) && in_array($status, $allowedStatuses) ? " AND status = :status" : ""),
-            !empty($status) && in_array($status, $allowedStatuses)
-                ? ['agent_id' => $agent_id, 'status' => $status]
-                : ['agent_id' => $agent_id]
+        // Count total unique buyers
+        $allBuyerRows = $db_call_class->selectRows(
+            "transactions",
+            ["user_id", "MAX(id) AS last_id"],
+            $conditions,
+            [
+                'groupBy' => 'user_id'
+            ]
         );
+        $total = is_array($allBuyerRows) ? count($allBuyerRows) : 0;
 
-        $total = isset($countBuyers[0]['total']) ? (int)$countBuyers[0]['total'] : 0;
-
-        //Fetch Distinct Buyer IDs for Pagination
-        $transactions = $db_call_class->runQuery(
-            "SELECT DISTINCT user_id FROM transactions WHERE agent_id = :agent_id" .
-                (!empty($status) && in_array($status, $allowedStatuses) ? " AND status = :status" : "") .
-                " ORDER BY id DESC LIMIT :limit OFFSET :offset",
-            !empty($status) && in_array($status, $allowedStatuses)
-                ? ['agent_id' => $agent_id, 'status' => $status, 'limit' => $limit, 'offset' => $offset]
-                : ['agent_id' => $agent_id, 'limit' => $limit, 'offset' => $offset]
+        // Fetch distinct buyer IDs for pagination
+        $transactions = $db_call_class->selectRows(
+            "transactions",
+            ["user_id", "MAX(id) AS last_id"],
+            $conditions,
+            [
+                'groupBy' => 'user_id',
+                'orderBy' => 'last_id',
+                'orderDirection' => 'DESC',
+                'limit' => $limit,
+                'pageno' => $page
+            ]
         );
 
         if ($utility_class_call->input_is_invalid($transactions)) {

@@ -21,30 +21,31 @@ if (getenv("REQUEST_METHOD") !== $apimethod) {
 }
 
 try {
-    // Validate API Token for User (forwho = 2)
-    $token = $api_status_call->ValidateAPITokenSentIN(1, 3);
-
-    // Extract and sanitize user public key
-    $user_pubkey = isset($token->usertoken) ? $utility_class_call->clean_user_data($token->usertoken, 1) : '';
-    if ($utility_class_call->input_is_invalid($user_pubkey)) {
-        $api_status_call->respondBadRequest(API_User_Response::$invalidUserDetail);
-    }
-
     // Validate send type (email or phone)
     $sendtype = isset($_POST["type"]) ? strtolower($utility_class_call->clean_user_data($_POST["type"], 1)) : '';
     if ($utility_class_call->input_is_invalid($sendtype) || !in_array($sendtype, ["email", "phone"])) {
         $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
     }
 
+    $email = isset($_POST["email"]) ? strtolower(trim($utility_class_call->clean_user_data($_POST["email"], 1))) : '';
+    $phoneno = isset($_POST["phoneno"]) ? $utility_class_call->clean_user_data($_POST["phoneno"], 1) : '';
+
+    if ($sendtype === "email" && $utility_class_call->input_is_invalid($email)) {
+        $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
+    }
+    if ($sendtype === "phone" && $utility_class_call->input_is_invalid($phoneno)) {
+        $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
+    }
+
     // Fetch user details
+    $where = ($sendtype === "email")
+        ? [[["column" => "email", "operator" => "=", "value" => $email]]]
+        : [[["column" => "phoneno", "operator" => "=", "value" => $phoneno]]];
+
     $responseData = $db_call->selectRows(
         "users",
-        "id, email, phoneno, fname",
-        [
-            [
-                ["column" => "userpubkey", "operator" => "=", "value" => $user_pubkey]
-            ]
-        ]
+        "id, email, phoneno, fname, userpubkey",
+        $where
     );
 
     if ($utility_class_call->input_is_invalid($responseData)) {
@@ -54,18 +55,19 @@ try {
     $user = $responseData[0];
     $user_id = $user["id"];
     $fname = $user["fname"];
-    $email = $user["email"];
-    $phoneno = $user["phoneno"];
+    $user_email = $user["email"];
+    $user_phone = $user["phoneno"];
+    $user_pubkey = $user["userpubkey"];
 
     // Determine destination
-    $destination = ($sendtype === "email") ? $email : $phoneno;
+    $destination = ($sendtype === "email") ? $user_email : $user_phone;
     if ($utility_class_call->input_is_invalid($destination)) {
         $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
     }
 
     // Generate password reset OTP
     $verificationCode = random_int(100000, 999999);
-    $expiryTimestamp = time() + (10 * 60); // 10 minutes expiry
+    $expiryTimestamp = time() + 60; // 60 seconds expiry
     $expiryTime = date('Y-m-d H:i:s', $expiryTimestamp);
 
     // verification_type = 3 (Forgot Password)
@@ -122,7 +124,7 @@ try {
         $maindata = [
             "sent_to" => $destination,
             "type" => $sendtype,
-            "expires_in_seconds" => 600
+            "expires_in_seconds" => 60
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$password_reset_otp);
     } else {

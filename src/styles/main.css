@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --emerald-900: #0b0b0b;
+  --emerald-950: #070707;
+  --gold-accent: #c9a227;
+  --stone-100: #f4f2ee;
+  --stone-200: #e6e2db;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  font-family: "Manrope", "Segoe UI", Tahoma, sans-serif;
+  background: var(--emerald-900);
+  color: #f5f5f5;
+}
+
+.font-display {
+  font-family: "Cormorant Garamond", "Times New Roman", serif;
+}
+
+.text-primary {
+  color: var(--emerald-900);
+}
+
+.bg-primary {
+  background-color: var(--emerald-900);
+}
+
+.bg-theme {
+  background-color: var(--emerald-900);
+}
+
+.text-theme {
+  color: var(--emerald-900);
+}
+
+.decoration-gold-accent {
+  text-decoration-color: var(--gold-accent);
+}
+
+.emerald-gradient-bg {
+  background: linear-gradient(135deg, #0b0b0b 0%, #070707 100%);
+}
+
+.layout-content-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.premium-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  border-top: 4px solid #0b0b0b;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: #0b0b0b !important;
+  box-shadow: 0 0 0 2px rgba(11, 11, 11, 0.12) !important;
+}
+
+.form-input,
+.form-select {
+  color: #0b0b0b;
+}
+
+.form-input::placeholder {
+  color: #3f4a46;
+}

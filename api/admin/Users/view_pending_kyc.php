@@ -83,6 +83,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
                 'u.email',
                 'uk.government_id_type',
                 'uk.government_id_number',
+                'uk.proof_of_address_status',
                 'uk.status',
                 'uk.created_at'
             ],

@@ -102,7 +102,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         }
 
         // Handle Image Uploads
-        $uploadDir = __DIR__ . "/../../../uploads/properties/";
+        $uploadDir = __DIR__ . "/../../../public/uploads/properties/";
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

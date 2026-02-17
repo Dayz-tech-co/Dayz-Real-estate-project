@@ -79,8 +79,8 @@ try {
     //Generate verification code (6-digit OTP)
     $verificationCode = random_int(100000, 999999);
 
-    // Expiry (5 minutes)
-    $expiryTimestamp = time() + (5 * 60);
+    // Expiry (60 seconds)
+    $expiryTimestamp = time() + 60;
     $expiryTime = date('Y-m-d H:i:s', $expiryTimestamp);
 
     //Insert OTP record
@@ -135,7 +135,7 @@ try {
         $maindata = [
             "sent_to" => $destination,
             "type" => $sendtype,
-            "expires_in_seconds" => 300
+            "expires_in_seconds" => 60
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$verificationSent);
     } else {

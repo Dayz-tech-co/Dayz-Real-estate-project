@@ -38,7 +38,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         //Fetch User's KYC Record
         $getKYC = $db_call_class->selectRows(
             "users_kyc_verifications",
-            "government_id_type, government_id_number, document_front, document_back, address, city, state, country, status, verified, admin_comment, created_at, updated_at",
+            "government_id_type, government_id_number, document_front, document_back, proof_of_address_type, proof_of_address_document, proof_of_address_status, proof_of_address_admin_comment, address, city, state, country, status, verified, admin_comment, created_at, updated_at",
             [[
                 ['column' => 'user_id', 'operator' => '=', 'value' => $user_id]
             ]]
@@ -66,6 +66,10 @@ if (getenv('REQUEST_METHOD') === $api_method) {
             "government_id_number" => $getKYC[0]['government_id_number'],
             "document_front"       => $getKYC[0]['document_front'],
             "document_back"        => $getKYC[0]['document_back'],
+            "proof_of_address"     => $getKYC[0]['proof_of_address_document'] ?? null,
+            "proof_of_address_type"=> $getKYC[0]['proof_of_address_type'] ?? null,
+            "proof_of_address_status" => $getKYC[0]['proof_of_address_status'] ?? null,
+            "proof_of_address_admin_comment" => $getKYC[0]['proof_of_address_admin_comment'] ?? null,
             "address"              => $getKYC[0]['address'],
             "city"                 => $getKYC[0]['city'],
             "state"                => $getKYC[0]['state'],

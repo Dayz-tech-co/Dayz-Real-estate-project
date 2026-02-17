@@ -58,11 +58,11 @@ try {
     $fullname = trim($fname . " " . $lname);
     $user_email = $user["email"];
     $user_phone = $user["phoneno"];
-    $already_email_verified = (int)$user["email_verified"];
-    $already_phone_verified = (int)$user["phone_verified"];
+    $already_email_verified = strtolower((string)$user["email_verified"]);
+    $already_phone_verified = strtolower((string)$user["phone_verified"]);
 
     //CASE 1: already verified
-    if ($type === "email" && $already_email_verified === 1) {
+    if ($type === "email" && $already_email_verified === "verified") {
         $subject = $_ENV['APP_NAME'] . " - Email Already Verified";
         $messageText = "Your email is already verified. No further action required.";
         $messageHTML = "
@@ -75,18 +75,20 @@ try {
         $api_status_call->respondOK([[
             "fullname" => $fullname,
             "verified_type" => "email",
-            "email_verified" => 1,
+            "email_verified" => "verified",
             "phone_verified" => $already_phone_verified
         ]], "Email already verified");
+        exit;
     }
 
-    if ($type === "phone" && $already_phone_verified === 1) {
+    if ($type === "phone" && $already_phone_verified === "verified") {
         $api_status_call->respondOK([[
             "fullname" => $fullname,
             "verified_type" => "phone",
             "email_verified" => $already_email_verified,
-            "phone_verified" => 1
+            "phone_verified" => "verified"
         ]], "Phone already verified");
+        exit;
     }
 
     //CASE 2: missing data

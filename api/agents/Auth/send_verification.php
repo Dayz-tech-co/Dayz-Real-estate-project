@@ -67,7 +67,7 @@ try {
     $verificationCode = random_int(100000, 999999);
 
     // store expiry as DATETIME string (5 minutes from now)
-    $expiryTimestamp = time() + (5 * 60);
+    $expiryTimestamp = time() + 60;
     $expiryTime = date('Y-m-d H:i:s', $expiryTimestamp);
 
     // Insert new OTP record into system_otps
@@ -123,7 +123,7 @@ try {
         $maindata = [
             "sent_to" => $destination,
             "type" => $sendtype,
-            "expires_in_seconds" => 300
+            "expires_in_seconds" => 60
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$verificationSent);
     } else {
