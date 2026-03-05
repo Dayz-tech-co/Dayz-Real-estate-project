@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == $apimethod) {
                             'location' => $location,
                         ]);
 
-                        $accesstoken = $api_status_call->getTokenToSendAPI($agentpubkey);
+                        $accesstoken = $api_status_call->getTokenToSendAPI($agentpubkey, 1, 2);
                         $maindata['access_token'] = $accesstoken;
                         $maindata = [$maindata];
 
@@ -151,6 +151,8 @@ if ($_SERVER["REQUEST_METHOD"] == $apimethod) {
                 } else {
                     $api_status_call->respondBadRequest(API_User_Response::$invalidUserDetail);
                 }
+            } else {
+                $api_status_call->respondBadRequest(API_User_Response::$invalidUserDetail);
             }
         }
     } catch (\Exception $e) {

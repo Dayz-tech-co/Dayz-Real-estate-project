@@ -93,6 +93,7 @@ try {
             "p.city",
             "p.state",
             "p.property_type",
+            "p.thumbnail",
             "a.agency_name"
         ],
         [[['column' => 'b.user_id', 'operator' => '=', 'value' => $user_id]]],
@@ -129,6 +130,7 @@ try {
             "p.id AS property_id",
             "p.title",
             "p.price",
+            "p.thumbnail",
             "a.agency_name"
         ],
         [[['column' => 't.user_id', 'operator' => '=', 'value' => $user_id]]],

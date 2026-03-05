@@ -1,16 +1,21 @@
 <template>
   <div class="min-h-screen bg-theme text-white">
-    <section class="layout-content-container px-6 py-10">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <p class="uppercase tracking-[0.3em] text-xs text-white/60">Property Comparison</p>
-          <h1 class="font-display text-3xl">Side-by-side analysis</h1>
-          <p class="text-white/70">Compare your shortlisted estates in Lagos and Abuja.</p>
-        </div>
-        <button class="px-5 py-2 text-xs uppercase tracking-widest border border-white/20 hover:bg-white/10">
-          Export Analysis
-        </button>
-      </div>
+    <section class="layout-content-container space-y-6 px-6 py-10">
+      <DeskHeader
+        eyebrow="Property Intel"
+        title="Side-by-side analysis"
+        subtitle="Compare shortlisted estates with clear metrics."
+        @back="navigateBack"
+      >
+        <template #actions>
+          <button
+            type="button"
+            class="border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+          >
+            Export Analysis
+          </button>
+        </template>
+      </DeskHeader>
 
       <div class="bg-white text-emerald-950 rounded-lg overflow-hidden border border-white/10">
         <div class="grid grid-cols-1 lg:grid-cols-[240px,1fr,1fr]">
@@ -60,3 +65,18 @@
     </section>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+import DeskHeader from '@/components/dashboard/DeskHeader.vue'
+
+const router = useRouter()
+
+function navigateBack() {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+  router.push('/dashboard/user')
+}
+</script>

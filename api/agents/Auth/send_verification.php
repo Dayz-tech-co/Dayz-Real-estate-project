@@ -42,7 +42,7 @@ try {
         "id, email, phoneno, agency_name, emailverified, phoneverified",
         [
             [
-                ["column" => "agentpubkey", "operator" => "=", "value" => $agent_pubkey]
+                ["column" => "Agentpubkey", "operator" => "=", "value" => $agent_pubkey]
             ]
         ]
     );
@@ -105,17 +105,8 @@ try {
 
         $sent = $mail_sms_call->sendUserMail($subject, $destination, $messageText, $messageHTML);
     } else {
-        // For now, just reuse email method for phone (you can replace with SMS later)
-        $subject = "OTP Verification";
-        $msgintext = Mail_SMS_Responses::sendOTPText($verificationCode);
-        $messageinhtml = "
-            <h3>OTP Verification</h3>
-            <p>Your verification code is <strong>$verificationCode</strong>.</p>
-            <p>Please use this code to complete your verification process.</p>
-            <br>
-            <p>Thank you,<br>The " . $_ENV['APP_NAME'] . " Team</p>
-        ";
-        $sent = $mail_sms_call->sendUserMail($subject, $destination, $msgintext, $messageinhtml);
+        $smsText = Mail_SMS_Responses::sendOTPText($verificationCode);
+        $sent = $mail_sms_call->sendUserSMSOTP($destination, $smsText);
     }
 
     // Final response
@@ -127,7 +118,13 @@ try {
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$verificationSent);
     } else {
-        $api_status_call->respondInternalError(API_User_Response::$error_creating_record);
+        $utility_class_call->log_to_file("agent_send_verification_error.log", [
+            "agent_id" => $agent_id,
+            "type" => $sendtype,
+            "destination" => $destination,
+            "message" => "OTP created but delivery failed"
+        ]);
+        $api_status_call->respondBadRequest("Unable to deliver OTP right now. Please retry.");
     }
 } catch (\Exception $e) {
     $api_status_call->respondInternalError($utility_class_call->get_details_from_exception($e));

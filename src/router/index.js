@@ -4,7 +4,8 @@ import HomeView from '@/pages/Home.vue'
 import BlogView from '@/pages/Blog.vue'
 import SingleBlogView from '@/pages/SingleBlog.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
-import LoginView from '@/views/auth/LoginView.vue'
+import LoginClientView from '@/views/auth/LoginClientView.vue'
+import LoginAgentView from '@/views/auth/LoginAgentView.vue'
 import VerifyAccountView from '@/views/auth/VerifyAccountView.vue'
 import ForgotPasswordView from '@/views/auth/ForgotPasswordView.vue'
 import ResetPasswordView from '@/views/auth/ResetPasswordView.vue'
@@ -28,13 +29,37 @@ const routes = [
     component: PropertyDetailsView,
     meta: { requiresAuth: true }
   },
-  { path: '/register', name: 'register', component: RegisterView },
-  { path: '/login', name: 'login', component: LoginView },
+  {
+    path: '/intel/:id',
+    name: 'market-intel-details',
+    component: PropertyDetailsView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    redirect: (to) => {
+      const role = String(to.query?.role || '').toLowerCase()
+      return role === 'agent' ? '/register/agent' : '/register/client'
+    }
+  },
+  { path: '/register/client', name: 'register-client', component: RegisterView, meta: { registerRole: 'user' } },
+  { path: '/register/agent', name: 'register-agent', component: RegisterView, meta: { registerRole: 'agent' } },
+  {
+    path: '/login',
+    name: 'login',
+    redirect: (to) => {
+      const role = String(to.query?.role || '').toLowerCase()
+      return role === 'agent' ? '/login/agent' : '/login/client'
+    }
+  },
+  { path: '/login/client', name: 'login-client', component: LoginClientView, meta: { loginRole: 'user' } },
+  { path: '/login/agent', name: 'login-agent', component: LoginAgentView, meta: { loginRole: 'agent' } },
   {
     path: '/verify-account',
     name: 'verify-account',
     component: VerifyAccountView,
-    meta: { requiresAuth: true, role: 'user' }
+    meta: { requiresAuth: true }
   },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPasswordView },
   { path: '/reset-password', name: 'reset-password', component: ResetPasswordView },
@@ -88,7 +113,13 @@ const routes = [
       return role === 'agent' ? '/settings/agent' : '/settings/user'
     }
   },
-  { path: '/intel', redirect: '/blog' }
+  {
+    path: '/intel',
+    redirect: () => {
+      const role = localStorage.getItem('USER_ROLE')
+      return role === 'agent' ? '/marketplace/agent' : '/blog'
+    }
+  }
 ]
 
 const router = createRouter({
@@ -105,7 +136,7 @@ router.beforeEach((to) => {
   const token = localStorage.getItem('AUTH_TOKEN')
   const role = localStorage.getItem('USER_ROLE')
 
-  if (!token) return { path: '/login' }
+  if (!token) return { path: '/login/client' }
   if (to.meta.role && to.meta.role !== role) {
     if (to.path.startsWith('/settings/')) {
       return role === 'agent' ? { path: '/settings/agent' } : { path: '/settings/user' }

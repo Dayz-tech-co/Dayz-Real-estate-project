@@ -1,87 +1,128 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center px-4 py-16">
-    <div class="premium-card shadow-2xl rounded-sm w-full max-w-xl p-10">
-      <div class="text-center mb-10">
-        <img
-          src="/images/DayzLogo.svg"
-          alt="Dayz"
-          class="h-32 md:h-36 w-auto object-contain mx-auto mb-4 bg-black/60 p-3 rounded-sm ring-1 ring-white/10"
-        />
-        <span class="text-gold-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">Access</span>
-        <h1 class="text-emerald-900 text-4xl font-display font-bold leading-tight mb-3">Sign In to Dayz</h1>
-        <p class="text-emerald-800/60">Choose your role and continue.</p>
+  <AuthLayout :role="role" page="login">
+    <EmeraldCard :variant="isClient ? 'client' : 'default'">
+      <div class="mb-8 text-center" :class="isClient ? 'space-y-3' : ''">
+        <template v-if="isClient">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-dayz-gold/85">PRIVATE ACCESS</p>
+          <h1 class="font-display text-4xl font-semibold text-slate-100">Sign In to Your Portfolio</h1>
+          <p class="mx-auto max-w-md text-sm leading-6 text-slate-300/85">
+            Manage your saved properties and investment activity.
+          </p>
+        </template>
+        <template v-else>
+          <h1 class="text-4xl font-semibold tracking-[0.2em] text-dayz-gold">DAYZ</h1>
+          <p class="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-dayz-gold/85">{{ portalLabel }}</p>
+        </template>
+        <div class="mx-auto mt-4 h-px bg-dayz-gold/70" :class="isClient ? 'w-28' : 'w-20'"></div>
       </div>
 
-      <form @submit.prevent="submitForm" class="grid gap-6">
-        <label class="block">
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Role</span>
-          <select v-model="form.role" class="form-select block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4">
-            <option value="agent">Agent</option>
-            <option value="user">User</option>
-          </select>
-        </label>
-        <label class="block">
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Email</span>
-          <input v-model="form.email" type="email" required class="form-input block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4" placeholder="you@email.com" />
-        </label>
-        <label class="block">
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Password</span>
-          <div class="relative">
-            <input
-              v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
-              required
-              class="form-input block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4 pr-12"
-              placeholder="********"
-            />
-            <button
-              type="button"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-900/70 hover:text-emerald-900"
-              @click="showPassword = !showPassword"
-              aria-label="Toggle password visibility"
-            >
-              <svg v-if="showPassword" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor">
-                <path d="M3.3 2.3 2.3 3.3l3.2 3.2A11.1 11.1 0 0 0 1 12s3.7 7 11 7c2.3 0 4.2-.6 5.8-1.5l2.9 2.9 1-1-17.4-17.1Zm8.9 8.8 2.5 2.4a2.9 2.9 0 0 1-2.5.5 3 3 0 0 1-2.3-2.3 2.9 2.9 0 0 1 .5-2.5l1.8 1.9Zm8.8.9s-3.7-7-11-7c-1.3 0-2.4.2-3.5.6l2 1.9a4.8 4.8 0 0 1 7 6.7l1.5 1.5c2.5-1.8 4-4.6 4-4.6Z"/>
-              </svg>
-              <svg v-else viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor">
-                <path d="M12 5C4.7 5 1 12 1 12s3.7 7 11 7 11-7 11-7-3.7-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
-              </svg>
-            </button>
-          </div>
-        </label>
+      <form class="space-y-4" @submit.prevent="submitForm">
+        <RoleToggle v-model="selectedRole" :variant="isClient ? 'client' : 'default'" />
 
-        <div class="flex items-center justify-between text-xs uppercase tracking-widest">
-          <RouterLink to="/forgot-password" class="text-emerald-900/70 hover:text-emerald-900">
-            Forgot Password
-          </RouterLink>
-          <RouterLink v-if="form.role === 'user'" to="/verify-account" class="text-emerald-900/70 hover:text-emerald-900">
-            Verify Account
-          </RouterLink>
+        <div class="border px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-dayz-gold" :class="isClient ? 'border-[#29463b] bg-[#12201c]' : 'border-dayz-border-muted bg-[#0f1916]'">
+          {{ roleLabel }} Login
         </div>
 
-        <div v-if="error" class="text-sm text-red-600">{{ error }}</div>
+        <LuxuryInput
+          v-model="form.email"
+          label="Email"
+          icon="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@email.com"
+          :variant="isClient ? 'client' : 'default'"
+          required
+        />
 
-        <button :disabled="loading" type="submit" class="emerald-gradient-bg text-white h-14 text-xs font-bold uppercase tracking-[0.3em] hover:brightness-110 shadow-xl transition-all disabled:opacity-60">
-          {{ loading ? 'Signing In...' : 'Sign In' }}
-        </button>
+        <LuxuryInput
+          v-model="form.password"
+          label="Password"
+          icon="lock"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Enter password"
+          :password-toggle="true"
+          :variant="isClient ? 'client' : 'default'"
+          required
+        />
+
+        <div class="flex items-center justify-between text-[11px] uppercase tracking-[0.12em]">
+          <RouterLink :to="`/forgot-password?role=${role}`" class="auth-link">Forgot Password</RouterLink>
+          <RouterLink :to="`/verify-account?role=${role}`" class="auth-link">Verify Account</RouterLink>
+        </div>
+
+        <p v-if="error" class="text-sm text-red-300">{{ error }}</p>
+
+        <LuxuryButton
+          :text="isClient ? 'ACCESS PORTFOLIO' : 'Sign In Securely'"
+          loading-text="Signing In..."
+          :loading="loading"
+          :show-lock="true"
+          :variant="isClient ? 'client' : 'default'"
+        />
+
+        <div v-if="isClient" class="space-y-2 pt-1 text-xs text-dayz-gold/85">
+          <p class="flex items-center justify-center gap-2">
+            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Secured Property Transactions
+          </p>
+          <p class="flex items-center justify-center gap-2">
+            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Private Client Confidentiality
+          </p>
+        </div>
+        <p v-else class="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 text-dayz-gold/80" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Secured with end-to-end encryption.
+        </p>
       </form>
-    </div>
-  </div>
+    </EmeraldCard>
+  </AuthLayout>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import api from '@/lib/api'
+import AuthLayout from '@/components/auth/AuthLayout.vue'
+import EmeraldCard from '@/components/auth/EmeraldCard.vue'
+import RoleToggle from '@/components/auth/RoleToggle.vue'
+import LuxuryInput from '@/components/auth/LuxuryInput.vue'
+import LuxuryButton from '@/components/auth/LuxuryButton.vue'
 
 const router = useRouter()
 const route = useRoute()
 const loading = ref(false)
 const error = ref('')
-const showPassword = ref(false)
+
+const role = computed(() => {
+  const roleFromMeta = String(route.meta?.loginRole || '').toLowerCase()
+  if (roleFromMeta === 'agent') return 'agent'
+  if (roleFromMeta === 'user') return 'user'
+  const roleFromQuery = String(route.query?.role || '').toLowerCase()
+  return roleFromQuery === 'agent' ? 'agent' : 'user'
+})
+
+const roleLabel = computed(() => (role.value === 'agent' ? 'Agent' : 'Client'))
+const portalLabel = computed(() => (role.value === 'agent' ? 'Agent Access Portal' : 'Client Access Portal'))
+const isClient = computed(() => role.value === 'user')
+
+const selectedRole = computed({
+  get: () => role.value,
+  set: async (nextRole) => {
+    const safeRole = nextRole === 'agent' ? 'agent' : 'user'
+    if (safeRole === role.value) return
+    await router.push(safeRole === 'agent' ? '/login/agent' : '/login/client')
+  }
+})
 
 const form = reactive({
-  role: ['agent', 'user'].includes(route.query.role) ? route.query.role : 'user',
   email: '',
   password: ''
 })
@@ -89,11 +130,6 @@ const form = reactive({
 function resolveEndpoint(role) {
   if (role === 'agent') return '/api/agents/Auth/loginapp.php'
   return '/api/users/Auth/loginapp.php'
-}
-
-function isVerified(value) {
-  const normalized = String(value || '').toLowerCase()
-  return normalized === 'verified' || normalized === '1' || normalized === 'true'
 }
 
 async function submitForm() {
@@ -104,23 +140,16 @@ async function submitForm() {
     payload.append('email', form.email)
     payload.append('password', form.password)
 
-    const res = await api.post(resolveEndpoint(form.role), payload)
+    const res = await api.post(resolveEndpoint(role.value), payload)
     if (res.data?.status) {
       const userData = res.data?.data?.[0] || {}
       const token = userData?.access_token
       if (token) {
         localStorage.setItem('AUTH_TOKEN', token)
-        localStorage.setItem('USER_ROLE', form.role)
+        localStorage.setItem('USER_ROLE', role.value)
       }
 
-      const hasEmailVerification = isVerified(userData.email_verified)
-      const hasPhoneVerification = isVerified(userData.phone_verified)
-      if (form.role === 'user' && !hasEmailVerification && !hasPhoneVerification) {
-        await router.push('/verify-account')
-        return
-      }
-
-      await router.push(form.role === 'agent' ? '/dashboard/agent' : '/dashboard/user')
+      await router.push(role.value === 'agent' ? '/dashboard/agent' : '/dashboard/user')
       return
     }
 

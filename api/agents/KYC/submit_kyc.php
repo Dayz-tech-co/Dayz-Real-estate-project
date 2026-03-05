@@ -25,7 +25,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         $agent_pubkey = $decodedToken->usertoken;
 
         // Fetch Agent Info
-        $getAgent = $db_call_class->selectRows("agents", "id, agency_name, email, kyc_verified", [[
+        $getAgent = $db_call_class->selectRows("agents", "id, agency_name, email, kyc_verified, cac_number", [[
             ['column' => 'agentpubkey', 'operator' => '=', 'value' => $agent_pubkey]
         ]]);
 
@@ -45,7 +45,9 @@ if (getenv('REQUEST_METHOD') === $api_method) {
 
         // Collect and sanitize inputs
         $business_name      = $utility_class_call->clean_user_data($_POST['business_name'] ?? '', 1);
-        $cac_number         = $utility_class_call->clean_user_data($_POST['cac_number'] ?? '', 1);
+        $cac_input          = $utility_class_call->clean_user_data($_POST['cac_number'] ?? ($_POST['license_number'] ?? ''), 1);
+        $profile_cac        = $utility_class_call->clean_user_data($getAgent[0]['cac_number'] ?? '', 1);
+        $cac_number         = !empty($cac_input) ? $cac_input : $profile_cac;
         $business_address   = $utility_class_call->clean_user_data($_POST['business_address'] ?? '', 1);
         $document_front     = $utility_class_call->clean_user_data($_POST['document_front'] ?? '', 1);
         $document_back      = $utility_class_call->clean_user_data($_POST['document_back'] ?? '', 1);
@@ -62,7 +64,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
             $api_status_code_class_call->respondBadRequest(API_User_Response::$missingrequiredfields);
         }
         // Check if Agent already has a KYC record
-        $existingKYC = $db_call_class->selectRows("kyc_verifications", "id, status, verified", [[
+        $existingKYC = $db_call_class->selectRows("kyc_verifications", "id, status, verified, document_front, document_back", [[
             ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id]
         ]]);
 
@@ -70,8 +72,9 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         if (!empty($existingKYC)) {
             $kycStatus = strtolower($existingKYC[0]['status'] ?? '');
             $kycVerified = (int)($existingKYC[0]['verified'] ?? 0);
+            $hasDocs = !empty($existingKYC[0]['document_front']) && !empty($existingKYC[0]['document_back']);
 
-            if ($kycStatus === 'pending') {
+            if ($kycStatus === 'pending' && $hasDocs) {
                 $api_status_code_class_call->respondBadRequest(API_User_Response::$kycpendingreview);
             }
 
@@ -114,8 +117,9 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         if (!empty($existingKYC)) {
             $kycStatus = strtolower($existingKYC[0]['status'] ?? '');
             $kycVerified = (int)($existingKYC[0]['verified'] ?? 0);
+            $hasDocs = !empty($existingKYC[0]['document_front']) && !empty($existingKYC[0]['document_back']);
 
-            if ($kycStatus === 'pending') {
+            if ($kycStatus === 'pending' && $hasDocs) {
                 $api_status_code_class_call->respondBadRequest(API_User_Response::$kycpendingreview);
             }
 

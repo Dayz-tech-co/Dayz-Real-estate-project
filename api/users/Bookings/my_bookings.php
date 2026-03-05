@@ -75,6 +75,9 @@ try {
             "booking_status"  => $booking['status'],
             "visit_date"      => $booking['visit_date'] ?? null,
             "end_date"        => $booking['end_date'] ?? null,
+            "total_amount"    => $booking['total_amount'] ?? null,
+            "payment_amount"  => $booking['payment_amount'] ?? null,
+            "payment_status"  => $booking['payment_status'] ?? null,
             "created_at"      => $booking['created_at']
         ];
     }

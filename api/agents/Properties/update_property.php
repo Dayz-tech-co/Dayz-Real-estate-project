@@ -32,8 +32,8 @@ try {
     $price         = $utility_class_call->clean_user_data($_POST['price'] ?? '', 1);
     $description   = $utility_class_call->clean_user_data($_POST['description'] ?? '', 1);
     $location      = $utility_class_call->clean_user_data($_POST['location'] ?? '', 1);
-    $property_type = $utility_class_call->clean_user_data($_POST['property_type'] ?? '', 1);
-    $property_category = $utility_class_call->clean_user_data($_POST['property_category'] ?? '', 1);
+    $property_type = strtolower(trim($utility_class_call->clean_user_data($_POST['property_type'] ?? '', 1)));
+    $property_category = strtolower(trim($utility_class_call->clean_user_data($_POST['property_category'] ?? '', 1)));
 
     //Validate Required Inputs
     if ($utility_class_call->input_is_invalid([$property_id, $title, $price, $description, $location, $property_type, $property_category])) {
@@ -42,6 +42,16 @@ try {
 
     if (!is_numeric($property_id)) {
         $api_status_code_class_call->respondBadRequest("Invalid property_id format");
+    }
+
+    $allowedPropertyTypes = ['shortlet', 'apartment', 'hotel', 'house', 'land', 'office'];
+    if (!in_array($property_type, $allowedPropertyTypes, true)) {
+        $api_status_code_class_call->respondBadRequest("Invalid property type. Allowed types: shortlet, apartment, hotel, house, land, office.");
+    }
+
+    $allowedPropertyCategories = ['sale', 'rent', 'lease'];
+    if (!in_array($property_category, $allowedPropertyCategories, true)) {
+        $api_status_code_class_call->respondBadRequest("Invalid property category. Allowed categories: sale, rent, lease.");
     }
 
     //Verify Agent

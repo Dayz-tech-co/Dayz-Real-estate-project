@@ -1,17 +1,29 @@
 <template>
-  <div class="min-h-screen bg-theme text-white">
+  <div class="min-h-screen bg-[radial-gradient(120%_140%_at_10%_0%,#1f2937_0%,#0f172a_55%,#020617_100%)] text-slate-100">
     <section class="layout-content-container px-6 py-12 space-y-8">
       <div class="flex items-center justify-between">
-        <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-white/60">Settings</p>
+        <div class="flex items-center gap-4">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+            @click="navigateBack"
+          >
+            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+              <path d="M14.7 5.3 8 12l6.7 6.7 1.4-1.4-5.3-5.3 5.3-5.3z" />
+            </svg>
+            Back
+          </button>
+          <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-slate-300/70">Settings</p>
           <h1 class="font-display text-3xl">Account Preferences</h1>
-          <p class="text-sm text-white/60 mt-2">
+          <p class="text-sm text-slate-300/80 mt-2">
             {{ isAgent ? 'Agent account configuration' : 'User account configuration' }}
           </p>
+          </div>
         </div>
         <button
           type="button"
-          class="border border-white/20 px-4 py-2 text-xs uppercase tracking-widest hover:bg-white/10"
+          class="border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest hover:bg-slate-700/70"
           @click="reloadAll"
         >
           Refresh
@@ -20,113 +32,113 @@
 
       <div class="grid gap-8 lg:grid-cols-[1.2fr,0.8fr] items-start">
         <div class="space-y-8">
-          <div class="rounded-lg border border-white/10 bg-emerald-950/80 p-6">
+          <div class="rounded-lg border border-slate-400/20 bg-slate-900/75 p-6 shadow-[0_8px_30px_rgba(2,6,23,0.35)]">
             <div class="mb-6">
-              <p class="text-xs uppercase tracking-widest text-white/60">Profile</p>
+              <p class="text-xs uppercase tracking-widest text-slate-300/70">Profile</p>
               <h2 class="font-display text-2xl">
                 {{ isAgent ? 'Agency Profile' : 'Verified Account Details' }}
               </h2>
             </div>
 
-            <div v-if="loadingProfile" class="text-sm text-white/60">
+            <div v-if="loadingProfile" class="text-sm text-slate-300/75">
               Loading {{ isAgent ? 'agency' : 'user' }} profile...
             </div>
 
             <div v-else-if="isAgent" class="grid gap-3 md:grid-cols-2">
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Agency Name</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Agency Name</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.agency_name) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Email</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Email</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.email) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Phone</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Phone</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.phoneno) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">KYC</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">KYC</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.kyc_verified) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm md:col-span-2">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Business Address</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm md:col-span-2">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Business Address</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.business_address) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">City</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">City</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.city) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">State</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">State</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.state) }}</p>
               </div>
             </div>
 
             <div v-else-if="isVerifiedUser" class="grid gap-3 md:grid-cols-2">
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">First Name</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">First Name</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.fname) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Last Name</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Last Name</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.lname) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Email</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Email</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.email) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Phone</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Phone</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.phoneno) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Country</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Country</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.country) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">State</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">State</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.state) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">City</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">City</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.city) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Street</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Street</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.streetname) }}</p>
               </div>
-              <div class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                <p class="text-[10px] uppercase tracking-widest text-white/50">Postal Code</p>
+              <div class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm">
+                <p class="text-[10px] uppercase tracking-widest text-slate-400">Postal Code</p>
                 <p class="mt-1 text-white">{{ valueOrDash(profile.postal_code) }}</p>
               </div>
             </div>
 
-            <div v-else class="rounded border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70">
+            <div v-else class="rounded border border-slate-400/20 bg-slate-800/55 px-4 py-3 text-sm text-slate-300/80">
               Profile details are shown here after account verification is completed.
             </div>
 
             <p v-if="profileError" class="mt-4 text-sm text-red-300">{{ profileError }}</p>
           </div>
 
-          <div class="rounded-lg border border-white/10 bg-emerald-950/80 p-6">
+          <div class="rounded-lg border border-slate-400/20 bg-slate-900/75 p-6 shadow-[0_8px_30px_rgba(2,6,23,0.35)]">
             <div class="mb-6">
-              <p class="text-xs uppercase tracking-widest text-white/60">Preferences</p>
+              <p class="text-xs uppercase tracking-widest text-slate-300/70">Preferences</p>
               <h2 class="font-display text-2xl">App Experience</h2>
             </div>
 
             <div class="grid gap-4 md:grid-cols-2">
               <label class="space-y-2 text-sm">
-                <span class="text-white/70">Language</span>
-                <select v-model="prefs.language" class="form-select h-11 w-full bg-white/10 border-white/10 px-3">
+                <span class="text-slate-300/80">Language</span>
+                <select v-model="prefs.language" class="form-select h-11 w-full bg-slate-800/65 border-slate-300/25 px-3">
                   <option value="en">English</option>
                   <option value="fr">French</option>
                   <option value="es">Spanish</option>
                 </select>
               </label>
               <label class="space-y-2 text-sm">
-                <span class="text-white/70">Currency</span>
-                <select v-model="prefs.currency" class="form-select h-11 w-full bg-white/10 border-white/10 px-3">
+                <span class="text-slate-300/80">Currency</span>
+                <select v-model="prefs.currency" class="form-select h-11 w-full bg-slate-800/65 border-slate-300/25 px-3">
                   <option value="NGN">NGN</option>
                   <option value="USD">USD</option>
                   <option value="GBP">GBP</option>
@@ -142,22 +154,39 @@
               </label>
             </div>
 
-            <p class="mt-4 text-xs text-white/50">
+            <p class="mt-4 text-xs text-slate-400">
               Preferences are saved locally on this device.
             </p>
           </div>
         </div>
 
         <aside class="space-y-8">
-          <div class="rounded-lg border border-white/10 bg-emerald-950/80 p-6">
+          <div class="rounded-lg border border-slate-400/20 bg-slate-900/75 p-6 shadow-[0_8px_30px_rgba(2,6,23,0.35)]">
+            <div class="mb-4">
+              <p class="text-xs uppercase tracking-widest text-slate-300/70">Session</p>
+              <h2 class="font-display text-2xl">JWT Access</h2>
+            </div>
+            <p class="text-sm text-slate-300/80">
+              End your current session on this device.
+            </p>
+            <button
+              type="button"
+              class="mt-4 border border-red-300/30 px-4 py-2 text-xs uppercase tracking-widest text-red-200 hover:bg-red-500/10"
+              @click="logout"
+            >
+              Logout
+            </button>
+          </div>
+
+          <div class="rounded-lg border border-slate-400/20 bg-slate-900/75 p-6 shadow-[0_8px_30px_rgba(2,6,23,0.35)]">
             <div class="mb-6 flex items-center justify-between">
               <div>
-                <p class="text-xs uppercase tracking-widest text-white/60">Notifications</p>
+                <p class="text-xs uppercase tracking-widest text-slate-300/70">Notifications</p>
                 <h2 class="font-display text-2xl">Recent Alerts</h2>
               </div>
               <button
                 type="button"
-                class="border border-white/20 px-3 py-2 text-xs uppercase tracking-widest hover:bg-white/10 disabled:opacity-50"
+                class="border border-slate-300/30 bg-slate-800/60 px-3 py-2 text-xs uppercase tracking-widest hover:bg-slate-700/70 disabled:opacity-50"
                 :disabled="unreadIds.length === 0"
                 @click="markAllRead"
               >
@@ -165,27 +194,27 @@
               </button>
             </div>
 
-            <div v-if="loadingNotifs" class="text-sm text-white/60">Loading notifications...</div>
+            <div v-if="loadingNotifs" class="text-sm text-slate-300/75">Loading notifications...</div>
             <div v-else-if="notifError" class="text-sm text-red-300">{{ notifError }}</div>
-            <div v-else-if="notifications.length === 0" class="text-sm text-white/60">No notifications yet.</div>
+            <div v-else-if="notifications.length === 0" class="text-sm text-slate-300/75">No notifications yet.</div>
 
             <div v-else class="space-y-4">
               <article
                 v-for="item in notifications"
                 :key="item.id"
-                class="rounded border border-white/10 bg-emerald-950/60 p-4 cursor-pointer hover:bg-emerald-900/50"
+                class="rounded border border-slate-400/20 bg-slate-800/55 p-4 cursor-pointer hover:bg-slate-700/65"
                 @click="openNotification(item)"
               >
                 <div class="flex items-start justify-between gap-3">
                   <div>
-                    <p class="text-[10px] uppercase tracking-widest text-white/50">{{ item.type || 'general' }}</p>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-400">{{ item.type || 'general' }}</p>
                     <h3 class="mt-1 text-sm font-semibold text-white">{{ item.title }}</h3>
-                    <p class="mt-2 text-xs text-white/60">{{ item.message }}</p>
-                    <p class="mt-3 text-[10px] uppercase tracking-widest text-white/40">{{ formatDate(item.created_at) }}</p>
+                    <p class="mt-2 text-xs text-slate-300/80">{{ item.message }}</p>
+                    <p class="mt-3 text-[10px] uppercase tracking-widest text-slate-500">{{ formatDate(item.created_at) }}</p>
                   </div>
                   <span
                     class="rounded border px-2 py-1 text-[10px] uppercase tracking-widest"
-                    :class="item.is_read ? 'border-white/20 text-white/50' : 'border-emerald-300/30 text-emerald-200'"
+                    :class="item.is_read ? 'border-slate-300/25 text-slate-400' : 'border-slate-200/35 text-slate-100'"
                   >
                     {{ item.is_read ? 'Read' : 'Unread' }}
                   </span>
@@ -194,7 +223,7 @@
                 <div class="mt-4 flex gap-2">
                   <button
                     type="button"
-                    class="border border-white/20 px-3 py-2 text-xs uppercase tracking-widest hover:bg-white/10 disabled:opacity-50"
+                    class="border border-slate-300/30 bg-slate-800/60 px-3 py-2 text-xs uppercase tracking-widest hover:bg-slate-700/70 disabled:opacity-50"
                     :disabled="item.is_read"
                     @click.stop="markRead([item.id])"
                   >
@@ -219,9 +248,11 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import api from '@/lib/api'
 
 const role = ref('user')
+const router = useRouter()
 
 const profile = reactive({
   fname: '',
@@ -433,6 +464,32 @@ function openNotification(item) {
 function reloadAll() {
   loadProfile()
   loadNotifications()
+}
+
+function navigateBack() {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+  router.push(role.value === 'agent' ? '/dashboard/agent' : '/dashboard/user')
+}
+
+async function logout() {
+  const currentRole = role.value
+  try {
+    const endpointByRole = {
+      user: '/api/users/Auth/logout.php',
+      agent: '/api/agents/Auth/logout.php',
+      admin: '/api/admin/Auth/logout.php'
+    }
+    const endpoint = endpointByRole[currentRole] || endpointByRole.user
+    await api.post(endpoint)
+  } catch (err) {
+    // continue local logout even if API revoke fails
+  }
+  localStorage.removeItem('AUTH_TOKEN')
+  localStorage.removeItem('USER_ROLE')
+  router.replace(`/login?role=${currentRole}`)
 }
 
 onMounted(() => {

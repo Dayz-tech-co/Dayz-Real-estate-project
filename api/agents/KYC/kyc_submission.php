@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === $api_method) {
         $agent_pubkey = $decodedToken->usertoken;
 
         // Fetch agent data
-        $getAgent = $db_call_class->selectRows("agents", "id, agency_name, email, kyc_verified", [[
+        $getAgent = $db_call_class->selectRows("agents", "id, agency_name, email, kyc_verified, cac_number", [[
             ['column' => 'agentpubkey', 'operator' => '=', 'value' => $agent_pubkey]
         ]]);
 
@@ -49,7 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === $api_method) {
 
         // Collect and sanitize fields
         $business_name    = $utility_class_call->clean_user_data($_POST['business_name'] ?? '', 1);
-        $cac_number       = $utility_class_call->clean_user_data($_POST['cac_number'] ?? '', 1);
+        $cac_input = $utility_class_call->clean_user_data($_POST['cac_number'] ?? ($_POST['license_number'] ?? ''), 1);
+        $profile_cac = $utility_class_call->clean_user_data($getAgent[0]['cac_number'] ?? '', 1);
+        $cac_number = !empty($cac_input) ? $cac_input : $profile_cac;
         $business_address = $utility_class_call->clean_user_data($_POST['business_address'] ?? '', 1);
         $city             = $utility_class_call->clean_user_data($_POST['city'] ?? '', 1);
         $state            = $utility_class_call->clean_user_data($_POST['state'] ?? '', 1);
@@ -60,15 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === $api_method) {
         }
 
         // Check if Agent already submitted KYC
-        $existingKYC = $db_call_class->selectRows("kyc_verification", "id, status, verified", [[
+        $existingKYC = $db_call_class->selectRows("kyc_verifications", "id, status, verified, document_front, document_back", [[
             ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id]
         ]]);
 
         if (!empty($existingKYC)) {
             $kycStatus = strtolower($existingKYC[0]['status'] ?? '');
             $kycVerified = (int)($existingKYC[0]['verified'] ?? 0);
+            $hasDocs = !empty($existingKYC[0]['document_front']) && !empty($existingKYC[0]['document_back']);
 
-            if ($kycStatus === 'pending') {
+            // Allow completing seeded pending KYC rows that do not have documents yet.
+            if ($kycStatus === 'pending' && $hasDocs) {
                 $api_status_code_class_call->respondBadRequest(API_User_Response::$kycpendingreview);
             }
 
@@ -124,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === $api_method) {
 
         // Insert or update
         if (empty($existingKYC)) {
-            $insert = $db_call_class->insertRow("kyc_verification", $kycData);
+            $insert = $db_call_class->insertRow("kyc_verifications", $kycData);
         } else {
-            $insert = $db_call_class->updateRows("kyc_verification", $kycData, [
+            $insert = $db_call_class->updateRows("kyc_verifications", $kycData, [
                 ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id]
             ]);
         }

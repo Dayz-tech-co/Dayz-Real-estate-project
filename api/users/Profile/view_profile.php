@@ -33,7 +33,7 @@ try {
     // Fetch user data
     $user = $db_call->selectRows(
         "users",
-        "id, fname, lname, email, phoneno, country, streetname, postal_code, state, city, email_verified, phone_verified, kyc_verified, status, created_at, updated_at",
+        "id, fname, lname, email, phoneno, country, streetname, postal_code, state, city, investment_budget_range, preferred_locations, property_type_interest, email_verified, phone_verified, kyc_verified, status, created_at, updated_at",
         [
             [
                 ['column' => 'userpubkey', 'operator' => '=', 'value' => $user_pubkey]

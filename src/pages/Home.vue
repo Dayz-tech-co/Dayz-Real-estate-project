@@ -3,6 +3,13 @@
     <div class="layout-content-container px-6 py-10">
       <div v-if="showSearch" class="mb-10 bg-emerald-950/80 border border-white/10 rounded-lg p-6">
         <div class="flex flex-wrap items-center gap-4">
+          <button
+            type="button"
+            class="h-12 px-4 border border-white/20 text-xs uppercase tracking-widest hover:bg-white/10"
+            @click="goBackFromSearch"
+          >
+            Back
+          </button>
           <input
             v-model="search.query"
             type="text"
@@ -110,6 +117,9 @@
                 </RouterLink>
                 <span class="absolute top-3 left-3 bg-emerald-950 text-white text-[10px] tracking-widest uppercase px-2 py-1">
                   {{ property.tag }}
+                </span>
+                <span class="absolute top-3 right-3 bg-white/90 text-emerald-950 text-[10px] tracking-widest uppercase px-2 py-1 border border-black/10">
+                  {{ property.categoryLabel }}
                 </span>
                 <button
                   v-if="!isAgent"
@@ -337,6 +347,19 @@ function normalizePropertyType(value) {
   return { key: 'shortlet', label: value || 'Shortlet' }
 }
 
+function normalizePropertyCategory(value, propertyType = '') {
+  const raw = String(value || '').trim().toLowerCase()
+  if (raw === 'sale') return { key: 'sale', label: 'Sale' }
+  if (raw === 'rental' || raw === 'rent') return { key: 'rental', label: 'Rental' }
+  if (raw === 'lease') return { key: 'lease', label: 'Lease' }
+
+  const typeRaw = String(propertyType || '').trim().toLowerCase()
+  if (typeRaw === 'apartment') return { key: 'rental', label: 'Rental' }
+
+  // Keep cards in known booking categories used by the app.
+  return { key: 'sale', label: 'Sale' }
+}
+
 const buildPreviewImages = (property) => {
   const candidates = []
   if (property.thumbnail) candidates.push(property.thumbnail)
@@ -417,6 +440,7 @@ async function loadProperties() {
         const localSet = imageSets.length > 0 ? imageSets[index % imageSets.length] : []
         const previewImages = localSet.length > 0 ? localSet.map(normalizeImage) : buildPreviewImages(p)
         const normalizedType = normalizePropertyType(p.property_type)
+        const normalizedCategory = normalizePropertyCategory(p.property_category, p.property_type)
         const syntheticType =
           typeof p.__syntheticTypeIndex === 'number'
             ? typeRotation[p.__syntheticTypeIndex % typeRotation.length]
@@ -436,6 +460,8 @@ async function loadProperties() {
           tag: p.featured ? 'Featured' : 'Curated',
           type: assignedType.key,
           typeLabel: assignedType.label,
+          category: normalizedCategory.key,
+          categoryLabel: normalizedCategory.label,
           image: previewImages[0],
           previewImages
         }
@@ -500,7 +526,7 @@ const filteredProperties = computed(() => {
   return properties.value.filter((property) => {
     const matchesType = type ? property.type === type : true
     const matchesFilterTypes = filters.activeTypes.length > 0 ? filters.activeTypes.includes(property.type) : true
-    const haystack = `${property.title} ${property.address} ${property.type}`.toLowerCase()
+    const haystack = `${property.title} ${property.address} ${property.type} ${property.category}`.toLowerCase()
     const matchesQuery = query ? haystack.includes(query) : true
     const matchesBudget = budget ? property.price <= budget : true
 
@@ -539,6 +565,15 @@ function handleListingsToggle() {
 function applyFilters() {
   filters.activeTypes = [...filters.types]
   visibleCount.value = INITIAL_VISIBLE
+}
+
+function goBackFromSearch() {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+  const role = localStorage.getItem('USER_ROLE')
+  router.push(role === 'agent' ? '/dashboard/agent' : '/dashboard/user')
 }
 
 watch([() => search.query, () => search.type, () => search.maxBudget, () => filters.types.length], () => {

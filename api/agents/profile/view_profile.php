@@ -32,20 +32,27 @@ try {
 
     $agency_name = isset($_POST['agency_name']) ? $utility_class_call->clean_user_data($_POST['agency_name']) : '';
 
-    if ($utility_class_call->input_is_invalid($agency_name)) {
-        $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
+    $conditions = [];
+    if (!$utility_class_call->input_is_invalid($agency_name)) {
+        $conditions = [[
+            ['column' => 'agency_name', 'operator' => '=', 'value' => $agency_name]
+        ]];
+    } else {
+        $conditions = [[
+            ['column' => 'Agentpubkey', 'operator' => '=', 'value' => $agent_pubkey]
+        ]];
     }
 
-    $agent = $db_call->selectRows("agents", "id,agency_name,email,phoneno,business_address,state,city,kyc_verified,status,emailverified,phoneverified,created_at,updated_at", [
-        [
-            ['column' => 'agency_name', 'operator' => '=', 'value' => $agency_name]
-        ]
-    ]);
+    $agent = $db_call->selectRows("agents", "id,full_name,agency_name,email,phoneno,business_address,state,city,kyc_verified,status,emailverified,phoneverified,created_at,updated_at", $conditions);
 
     if ($utility_class_call->input_is_invalid($agent)) {
         $api_status_call->respondUnauthorized();
     } else {
         $maindata = $agent[0];
+        $kyc = $db_call->selectRows("kyc_verifications", "business_reg_no", [[
+            ['column' => 'agent_id', 'operator' => '=', 'value' => $maindata['id']]
+        ]]);
+        $maindata['cac_number'] = !empty($kyc[0]['business_reg_no']) ? $kyc[0]['business_reg_no'] : '';
         $text = API_User_Response::$data_found;
         $api_status_call->respondOK($maindata, $text);
     }

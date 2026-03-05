@@ -277,7 +277,7 @@ async function submitForm() {
         localStorage.setItem('AUTH_TOKEN', token)
         localStorage.setItem('USER_ROLE', 'agent')
       }
-      await router.push('/login?role=agent')
+      await router.push('/verify-account?role=agent')
       return
     }
 

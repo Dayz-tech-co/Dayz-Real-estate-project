@@ -1,6 +1,35 @@
 <template>
   <div class="min-h-screen bg-theme text-white">
-    <section class="layout-content-container px-6 py-12">
+    <section class="layout-content-container space-y-8 px-6 py-10">
+      <DeskHeader
+        eyebrow="Private Client Desk"
+        title="Client Dashboard"
+        subtitle="Track portfolio activity, bookings, and compliance from one place."
+        :show-back="false"
+      >
+        <template #actions>
+          <input
+            v-model.trim="dashboardSearch"
+            type="text"
+            placeholder="Search activity..."
+            class="h-10 w-48 border border-slate-300/25 bg-slate-900/70 px-3 text-xs uppercase tracking-wider text-slate-100 placeholder:text-slate-500"
+          />
+          <button
+            type="button"
+            class="border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+            @click="openSavedPage"
+          >
+            Saved
+          </button>
+          <button
+            type="button"
+            class="border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+            @click="openSettingsPage"
+          >
+            Settings
+          </button>
+        </template>
+      </DeskHeader>
       <div class="grid gap-10 lg:grid-cols-[320px,1fr] items-start">
         <aside class="bg-emerald-950/80 border border-white/10 p-6 space-y-6">
           <div class="bg-black/40 border border-white/10 rounded-sm p-4">
@@ -46,6 +75,13 @@
               @click="setTab('kyc')"
             >
               KYC Status
+            </button>
+            <button
+              type="button"
+              class="block w-full text-left px-3 py-2 rounded-sm text-red-200 hover:bg-red-500/10"
+              @click="logout"
+            >
+              Logout
             </button>
           </nav>
 
@@ -140,18 +176,23 @@
                 <div v-else-if="error" class="px-6 py-6 text-sm text-red-600">
                   {{ error }}
                 </div>
-                <div v-else-if="recentActivity.length === 0" class="px-6 py-6 text-sm text-emerald-900/60">
+                <div v-else-if="filteredRecentActivity.length === 0" class="px-6 py-6 text-sm text-emerald-900/60">
                   No recent activity yet.
                 </div>
                 <div
                   v-else
-                  v-for="item in recentActivity"
+                  v-for="item in filteredRecentActivity"
                   :key="item.key"
                   class="px-6 py-4 flex items-center justify-between"
                 >
-                  <div>
-                    <p class="font-semibold">{{ item.title }}</p>
-                    <p class="text-sm text-emerald-900/60">{{ item.meta }}</p>
+                  <div class="flex items-center gap-3">
+                    <div class="h-12 w-16 rounded-sm overflow-hidden bg-emerald-950/10 border border-black/5">
+                      <img :src="recentActivityImage(item)" :alt="item.title || 'Activity'" class="h-full w-full object-cover" />
+                    </div>
+                    <div>
+                      <p class="font-semibold">{{ item.title }}</p>
+                      <p class="text-sm text-emerald-900/60">{{ item.meta }}</p>
+                    </div>
                   </div>
                   <span v-if="item.amount" class="text-sm font-semibold">₦ {{ item.amount }}</span>
                 </div>
@@ -253,14 +294,11 @@
               </div>
             </div>
 
-            <div class="bg-white text-emerald-950 rounded-lg border border-white/10 overflow-hidden">
+            <div v-if="isKycPending" class="bg-white text-emerald-950 rounded-lg border border-white/10 overflow-hidden">
               <div class="px-6 py-4 border-b border-black/10">
                 <h3 class="font-display text-2xl">Submit Identity Documents</h3>
               </div>
               <form class="px-6 py-6 space-y-5" @submit.prevent="submitKycDocuments">
-                <div v-if="isKycApproved" class="text-sm text-emerald-900/70">
-                  Your identity verification is already approved. You cannot resubmit ID documents.
-                </div>
                 <div class="grid gap-4 md:grid-cols-2">
                   <label class="space-y-2 text-sm">
                     <span class="text-emerald-900">ID Type</span>
@@ -324,14 +362,14 @@
                 <button
                   type="submit"
                   class="emerald-gradient-bg text-white h-12 px-6 text-xs font-bold uppercase tracking-[0.3em] hover:brightness-110 shadow-lg transition-all disabled:opacity-60"
-                  :disabled="kycSubmitting || isKycApproved"
+                  :disabled="kycSubmitting"
                 >
                   {{ kycSubmitting ? 'Submitting...' : 'Submit ID Documents' }}
                 </button>
               </form>
             </div>
 
-            <div class="bg-white text-emerald-950 rounded-lg border border-white/10 overflow-hidden">
+            <div v-if="isKycPending" class="bg-white text-emerald-950 rounded-lg border border-white/10 overflow-hidden">
               <div class="px-6 py-4 border-b border-black/10">
                 <h3 class="font-display text-2xl">Submit Proof of Residence</h3>
               </div>
@@ -368,11 +406,13 @@
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/lib/api'
+import DeskHeader from '@/components/dashboard/DeskHeader.vue'
 
 const loading = ref(false)
 const error = ref('')
 const activeTab = ref('overview')
 const router = useRouter()
+const dashboardSearch = ref('')
 
 const tabLoading = reactive({
   saved: false,
@@ -447,9 +487,23 @@ const subtitle = computed(() => {
   return 'Your shortlisted properties are ready for review.'
 })
 
+const normalizedKycStatus = computed(() => {
+  const detailStatus = String(kycDetails.value?.status || '').toLowerCase()
+  if (detailStatus) return detailStatus
+
+  const backendStatus = String(dashboard.kyc_status.status || '').toLowerCase()
+  if (backendStatus === 'verified') return 'approved'
+  if (backendStatus) return backendStatus
+
+  return 'pending'
+})
+
+const isKycPending = computed(() => {
+  return ['pending', 'not_verified', 'under_review', 'submitted'].includes(normalizedKycStatus.value)
+})
+
 const isKycApproved = computed(() => {
-  const status = (kycDetails.value?.status || '').toLowerCase()
-  return status === 'approved'
+  return normalizedKycStatus.value === 'approved'
 })
 
 const hasProofOfAddress = computed(() => {
@@ -506,6 +560,15 @@ const recentActivity = computed(() => {
   return items.slice(0, 6)
 })
 
+const filteredRecentActivity = computed(() => {
+  const query = String(dashboardSearch.value || '').toLowerCase()
+  if (!query) return recentActivity.value
+  return recentActivity.value.filter((item) => {
+    const haystack = `${item.title || ''} ${item.meta || ''}`.toLowerCase()
+    return haystack.includes(query)
+  })
+})
+
 function formatMoney(value) {
   if (value === null || value === undefined || value === '') return '₦ 0'
   const amount = Number(value)
@@ -539,6 +602,11 @@ function wishlistImage(item) {
   }
   return normalizeImage(item.thumbnail)
 }
+
+function recentActivityImage(item) {
+  return normalizeImage(item?.thumbnail)
+}
+
 function formatDate(value) {
   if (!value) return ''
   const date = new Date(value)
@@ -675,6 +743,14 @@ function openSavedProperty(item) {
   router.push(`/property/${propertyId}`)
 }
 
+function openSavedPage() {
+  router.push('/saved')
+}
+
+function openSettingsPage() {
+  router.push('/settings/user')
+}
+
 function openKycTab() {
   setTab('kyc')
   nextTick(() => {
@@ -750,4 +826,16 @@ async function loadDashboard() {
 }
 
 onMounted(loadDashboard)
+
+async function logout() {
+  try {
+    await api.post('/api/users/Auth/logout.php')
+  } catch (err) {
+    // continue local logout even if revoke endpoint fails
+  }
+  localStorage.removeItem('AUTH_TOKEN')
+  localStorage.removeItem('USER_ROLE')
+  router.replace('/login?role=user')
+}
 </script>
+

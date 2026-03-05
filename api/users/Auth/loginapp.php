@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == $apimethod) {
             ]);
 
             // Create access token
-            $accesstoken = $api_status_call->getTokenToSendAPI($new_userpubkey);
+            $accesstoken = $api_status_call->getTokenToSendAPI($new_userpubkey, 1, 3);
             $maindata['access_token'] = $accesstoken;
 
             $api_status_call->respondOK([$maindata], API_User_Response::$loginSuccessful);

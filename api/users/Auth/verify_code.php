@@ -116,7 +116,12 @@ try {
                 ["column" => "status", "operator" => "=", "value" => 1]
             ]
         ],
-        "ORDER BY id DESC LIMIT 1"
+        [
+            "orderBy" => "id",
+            "orderDirection" => "DESC",
+            "limit" => 1,
+            "pageno" => 1
+        ]
     );
 
     if ($utility_class_call->input_is_invalid($otp_record)) {

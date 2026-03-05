@@ -65,13 +65,22 @@ try {
     }
 
     // Validate property_id (must be approved)
-    $property = $db_call->selectRows("properties", "id, agent_id", [[
+    $property = $db_call->selectRows("properties", "id, agent_id, property_category, property_type", [[
         ['column' => 'id', 'operator' => '=', 'value' => $property_id],
         ['column' => 'status', 'operator' => '=', 'value' => 'approved']
     ]]);
 
     if ($utility_class_call->input_is_invalid($property)) {
         $api_status_call->respondBadRequest("Property not found or not available for visit request (must be approved property)");
+    }
+
+    $propertyCategory = strtolower(trim($property[0]['property_category'] ?? ''));
+    $propertyType = strtolower(trim($property[0]['property_type'] ?? ''));
+    if ($propertyType === 'apartment') {
+        $api_status_call->respondBadRequest("Apartment listings can only be booked.");
+    }
+    if ($propertyCategory !== 'sale') {
+        $api_status_call->respondBadRequest("Visit requests are only allowed for sale properties.");
     }
 
     $agent_id = $property[0]['agent_id'];

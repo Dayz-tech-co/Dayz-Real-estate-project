@@ -21,30 +21,31 @@ if (getenv("REQUEST_METHOD") !== $apimethod) {
 }
 
 try {
-    //Validate API Token for Agent (forwho = 3)
-    $token = $api_status_call->ValidateAPITokenSentIN(1, 2);
-
-    // Extract and sanitize agent public key
-    $agent_pubkey = isset($token->usertoken) ? $utility_class_call->clean_user_data($token->usertoken, 1) : '';
-    if ($utility_class_call->input_is_invalid($agent_pubkey)) {
-        $api_status_call->respondBadRequest(API_User_Response::$invalidUserDetail);
-    }
-
-    //Validate send type (email or phone)
+    // Validate send type (email or phone)
     $sendtype = isset($_POST["type"]) ? strtolower($utility_class_call->clean_user_data($_POST["type"], 1)) : '';
     if ($utility_class_call->input_is_invalid($sendtype) || !in_array($sendtype, ["email", "phone"])) {
         $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
     }
 
-    //Fetch agent details
+    $email = isset($_POST["email"]) ? strtolower(trim($utility_class_call->clean_user_data($_POST["email"], 1))) : '';
+    $phoneno = isset($_POST["phoneno"]) ? $utility_class_call->clean_user_data($_POST["phoneno"], 1) : '';
+
+    if ($sendtype === "email" && $utility_class_call->input_is_invalid($email)) {
+        $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
+    }
+    if ($sendtype === "phone" && $utility_class_call->input_is_invalid($phoneno)) {
+        $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
+    }
+
+    // Fetch agent details
+    $where = ($sendtype === "email")
+        ? [[["column" => "email", "operator" => "=", "value" => $email]]]
+        : [[["column" => "phoneno", "operator" => "=", "value" => $phoneno]]];
+
     $responseData = $db_call->selectRows(
         "agents",
-        "id, email, phoneno, agency_name",
-        [
-            [
-                ["column" => "agentpubkey", "operator" => "=", "value" => $agent_pubkey]
-            ]
-        ]
+        "id, email, phoneno, agency_name, Agentpubkey",
+        $where
     );
 
     if ($utility_class_call->input_is_invalid($responseData)) {
@@ -54,26 +55,28 @@ try {
     $agent = $responseData[0];
     $agent_id = $agent["id"];
     $agency_name = $agent["agency_name"];
-    $email = $agent["email"];
-    $phoneno = $agent["phoneno"];
+    $agent_email = $agent["email"];
+    $agent_phone = $agent["phoneno"];
+    $agent_pubkey = $agent["Agentpubkey"];
 
-    //Determine destination
-    $destination = ($sendtype === "email") ? $email : $phoneno;
+    // Determine destination
+    $destination = ($sendtype === "email") ? $agent_email : $agent_phone;
     if ($utility_class_call->input_is_invalid($destination)) {
         $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
     }
 
-    //Generate password reset OTP
+    // Generate password reset OTP
     $verificationCode = random_int(100000, 999999);
-    $expiryTimestamp = time() + 60; // 60 seconds expiry
+    // Keep reset OTP valid for 10 minutes to match UX copy and normal delivery delays.
+    $expiryTimestamp = time() + 600;
     $expiryTime = date('Y-m-d H:i:s', $expiryTimestamp);
 
-    //verification_type = 3 (Forgot Password)
+    // verification_type = 3 (Forgot Password)
     $verification_type = 3;
-    $method_used = 1; // Email/SMS
+    $method_used = ($sendtype === "email") ? 1 : 2;
     $forwho = 3; // Agent
 
-    //Insert OTP record into system_otps
+    // Insert OTP record into system_otps
     $insert_otp = $db_call->insertRow(
         "system_otps",
         [
@@ -107,14 +110,8 @@ try {
 
         $sent = $mail_sms_call->sendUserMail($subject, $destination, $messageText, $messageHTML);
     } else {
-        $subject = "Password Reset OTP";
-        $messageText = "Use this OTP to reset your password: {$verificationCode}";
-        $messageHTML = "
-            <h3>Password Reset</h3>
-            <p>Your OTP is <strong>{$verificationCode}</strong>.</p>
-            <p>It expires in 10 minutes.</p>
-        ";
-        $sent = $mail_sms_call->sendUserMail($subject, $destination, $messageText, $messageHTML);
+        $messageText = "Use this OTP to reset your password: {$verificationCode}. It expires in 10 minutes.";
+        $sent = Mail_SMS_Responses::sendUserSMSOTP($destination, $messageText);
     }
 
     // Final Response
@@ -122,13 +119,12 @@ try {
         $maindata = [
             "sent_to" => $destination,
             "type" => $sendtype,
-            "expires_in_seconds" => 60
+            "expires_in_seconds" => 600
         ];
         $api_status_call->respondOK([$maindata], API_User_Response::$password_reset_otp);
     } else {
         $api_status_call->respondInternalError(API_User_Response::$error_creating_record);
     }
-
 } catch (\Exception $e) {
     $api_status_call->respondInternalError($utility_class_call->get_details_from_exception($e));
 }

@@ -45,8 +45,8 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         // Clean Inputs
         $title              = isset($_POST["title"]) ? $utility_class_call->clean_user_data($_POST['title'], 1) : "";
         $description        = isset($_POST["description"]) ? $utility_class_call->clean_user_data($_POST['description'], 1) : "";
-        $property_type      = isset($_POST["property_type"]) ? $utility_class_call->clean_user_data($_POST['property_type'], 1) : "";
-        $property_category  = isset($_POST["property_category"]) ? $utility_class_call->clean_user_data($_POST['property_category'], 1) : "";
+        $property_type      = isset($_POST["property_type"]) ? strtolower(trim($utility_class_call->clean_user_data($_POST['property_type'], 1))) : "";
+        $property_category  = isset($_POST["property_category"]) ? strtolower(trim($utility_class_call->clean_user_data($_POST['property_category'], 1))) : "";
         $bed                = isset($_POST["bed"]) ? $utility_class_call->clean_user_data($_POST['bed'], 1) : "";
         $bath               = isset($_POST["bath"]) ? $utility_class_call->clean_user_data($_POST['bath'], 1) : "";
         $balc               = isset($_POST["balcony"]) ? $utility_class_call->clean_user_data($_POST['balcony'], 1) : "";
@@ -61,8 +61,20 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         $location           = isset($_POST["location"]) ? $utility_class_call->clean_user_data($_POST['location'], 1) : "";
 
         // Validate Required Fields
-        if (empty($title) || empty($price) || empty($city) || empty($state) || empty($property_type)) {
+        if (empty($title) || empty($price) || empty($city) || empty($state) || empty($property_type) || empty($property_category)) {
             $api_status_code_class_call->respondBadRequest(API_User_Response::$missingrequiredfields);
+        }
+
+        // Enforce supported property types only
+        $allowedPropertyTypes = ['shortlet', 'apartment', 'hotel', 'house', 'land', 'office'];
+        if (!in_array($property_type, $allowedPropertyTypes, true)) {
+            $api_status_code_class_call->respondBadRequest("Invalid property type. Allowed types: shortlet, apartment, hotel, house, land, office.");
+        }
+
+        // Enforce supported property categories only
+        $allowedPropertyCategories = ['sale', 'rent', 'lease'];
+        if (!in_array($property_category, $allowedPropertyCategories, true)) {
+            $api_status_code_class_call->respondBadRequest("Invalid property category. Allowed categories: sale, rent, lease.");
         }
 
         // Duplicate Property Check
@@ -124,6 +136,10 @@ if (getenv('REQUEST_METHOD') === $api_method) {
                     $imagePaths[] = "uploads/properties/" . $fileName;
                 }
             }
+        }
+
+        if (count($imagePaths) < 5) {
+            $api_status_code_class_call->respondBadRequest("Please upload at least 5 property images.");
         }
 
         $imagesJSON = json_encode($imagePaths);
