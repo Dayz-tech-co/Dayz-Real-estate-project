@@ -78,6 +78,7 @@ try {
                 "phone_verified" => $already_phone_verified
             ]
         ], "Email already verified");
+        exit;
     }
 
     if ($type === "phone" && $already_phone_verified === 1) {
@@ -89,6 +90,7 @@ try {
                 "phone_verified" => 1
             ]
         ], "Phone already verified");
+        exit;
     }
 
     // CASE 2: if agent email is missing (user not fully registered)
@@ -116,7 +118,12 @@ try {
                 ["column" => "status", "operator" => "=", "value" => 1]
             ]
         ],
-        "ORDER BY id DESC LIMIT 1"
+        [
+            "orderBy" => "id",
+            "orderDirection" => "DESC",
+            "limit" => 1,
+            "pageno" => 1
+        ]
     );
 
     if ($utility_class_call->input_is_invalid($otp_record)) {

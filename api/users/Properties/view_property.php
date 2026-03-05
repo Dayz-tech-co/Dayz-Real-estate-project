@@ -20,22 +20,22 @@ if (getenv("REQUEST_METHOD") !== $apimethod) {
 }
 
 try {
-    // Validate API token for user (1,3)
-    $decodedToken = $api_status_code_class_call->ValidateAPITokenSentIN(1, 3);
-    $user_pubkey = isset($decodedToken->usertoken) ? $utility_class_call->clean_user_data($decodedToken->usertoken, 1) : '';
+    // Validate API token and accept either a user or an agent session token.
+    // whocalled=0 disables role-forwho strict matching at token validation level.
+    $decodedToken = $api_status_code_class_call->ValidateAPITokenSentIN(1, 0);
+    $session_pubkey = isset($decodedToken->usertoken) ? $utility_class_call->clean_user_data($decodedToken->usertoken, 1) : '';
 
-    // Fetch user record
-    $getUser = $db_call_class->selectRows("users", "id, fname, lname, email, kyc_verified", [[
-        ['column' => 'userpubkey', 'operator' => '=', 'value' => $user_pubkey]
-    ]]);
+    $getUser = $db_call_class->selectRows("users", "id", [[
+        ['column' => 'userpubkey', 'operator' => '=', 'value' => $session_pubkey]
+    ]], ['limit' => 1]);
 
-    if ($utility_class_call->input_is_invalid($getUser)) {
+    $getAgent = $db_call_class->selectRows("agents", "id", [[
+        ['column' => 'agentpubkey', 'operator' => '=', 'value' => $session_pubkey]
+    ]], ['limit' => 1]);
+
+    if ($utility_class_call->input_is_invalid($getUser) && $utility_class_call->input_is_invalid($getAgent)) {
         $api_status_code_class_call->respondUnauthorized();
     }
-
-    $user_id = $getUser[0]['id'];
-    $fullname = trim($getUser[0]['fname'] . ' ' . $getUser[0]['lname']);
-    $user_email = $getUser[0]['email'];
 
     // Get property_id from POST
     $property_id = isset($_POST['property_id']) ? $utility_class_call->clean_user_data($_POST['property_id'], 1) : '';

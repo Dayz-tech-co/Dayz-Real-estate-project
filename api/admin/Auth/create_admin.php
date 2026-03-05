@@ -75,7 +75,7 @@ if(getenv('REQUEST_METHOD') == $api_method){
             // generating user access token
             $emailverified = 0;
             $tokentype = 1;
-            $accesstoken = $api_status_call->getTokenToSendAPI($Admin_pub_Key, $tokentype);
+            $accesstoken = $api_status_call->getTokenToSendAPI($Admin_pub_Key, $tokentype, 1);
             $maindata['access_token']=$accesstoken;
             $maindata['email_verified']=0;
             $maindata['phone_no_verified']=0;

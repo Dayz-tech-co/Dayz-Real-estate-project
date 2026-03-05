@@ -127,7 +127,7 @@ if (getenv("REQUEST_METHOD") == $apimethod) {
                         $db_call_class->insertRow("user_sessions", ["email" => $email, 'sessioncode' => $seescode, 'ipaddress' => $ipaddress, 'browser' => $browser, 'forwho' => 1, 'location' => $location,]);
                         // generating user access token
 
-                        $accesstoken = $api_status_code_class_call->getTokenToSendAPI($adminpubkey,);
+                        $accesstoken = $api_status_code_class_call->getTokenToSendAPI($adminpubkey, 1, 1);
                         $maindata['access_token'] = $accesstoken;
 
                         $maindata = [$maindata];

@@ -1,15 +1,22 @@
 ﻿<template>
   <div class="min-h-screen bg-theme text-white">
-    <section class="layout-content-container px-6 py-12">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <p class="uppercase tracking-[0.3em] text-xs text-white/60">Saved Properties</p>
-          <h1 class="font-display text-3xl">Your Wishlist</h1>
-        </div>
-        <RouterLink to="/" class="text-xs uppercase tracking-widest border border-white/20 px-4 py-2 hover:bg-white/10">
-          Back to Home
-        </RouterLink>
-      </div>
+    <section class="layout-content-container space-y-8 px-6 py-10">
+      <DeskHeader
+        eyebrow="Property Intel"
+        title="Your Wishlist"
+        subtitle="All saved listings in one place with direct access to details."
+        @back="navigateBack"
+      >
+        <template #actions>
+          <button
+            type="button"
+            class="border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+            @click="openDashboard"
+          >
+            Dashboard
+          </button>
+        </template>
+      </DeskHeader>
 
       <div v-if="loading" class="text-white/70">Loading saved properties...</div>
       <div v-else-if="error" class="text-red-400">{{ error }}</div>
@@ -52,8 +59,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import api from '@/lib/api'
+import DeskHeader from '@/components/dashboard/DeskHeader.vue'
 
 const loading = ref(false)
 const error = ref('')
@@ -108,6 +116,18 @@ function openProperty(id) {
   const propertyId = Number(id)
   if (!propertyId) return
   router.push(`/property/${propertyId}`)
+}
+
+function navigateBack() {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+  router.push('/dashboard/user')
+}
+
+function openDashboard() {
+  router.push('/dashboard/user')
 }
 
 onMounted(loadWishlist)

@@ -1,42 +1,54 @@
 <template>
-  <div class="min-h-screen bg-theme text-white">
+  <div class="min-h-screen bg-[radial-gradient(120%_140%_at_10%_0%,#1f2937_0%,#0f172a_55%,#020617_100%)] text-white">
     <section class="layout-content-container px-6 py-10 space-y-8">
-      <div class="rounded-lg border border-white/10 bg-cyan-950/60 p-6">
-        <p class="text-xs uppercase tracking-[0.3em] text-cyan-100/70">Agent Marketplace</p>
-        <h1 class="font-display text-3xl mt-2">Network Listings Command</h1>
-        <p class="text-sm text-cyan-100/75 mt-2">
-          Browse your inventory and other agent listings in one place, with booking and earnings tracking.
-        </p>
+      <div class="flex items-start gap-4">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 border border-slate-300/30 bg-slate-800/60 px-4 py-2 text-xs uppercase tracking-widest text-slate-100 hover:bg-slate-700/70"
+          @click="goBack"
+        >
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+            <path d="M14.7 5.3 8 12l6.7 6.7 1.4-1.4-5.3-5.3 5.3-5.3z" />
+          </svg>
+          Back
+        </button>
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-amber-200/75">Market Intel</p>
+          <h1 class="mt-2 font-display text-3xl text-slate-100">Agent Property Desk</h1>
+          <p class="mt-2 text-sm text-slate-300/80">
+            Browse your inventory and network listings with faster filtering and actions.
+          </p>
+        </div>
       </div>
 
       <div class="grid gap-4 md:grid-cols-4">
-        <div class="border border-white/10 bg-cyan-950/70 p-4">
+        <div class="border border-slate-400/20 bg-slate-900/75 p-4">
           <p class="text-xs uppercase tracking-widest text-white/60">Total Listings</p>
-          <p class="font-display text-2xl mt-1">{{ filteredListings.length }}</p>
+          <p class="mt-1 font-display text-2xl">{{ filteredListings.length }}</p>
         </div>
-        <div class="border border-white/10 bg-cyan-950/70 p-4">
+        <div class="border border-slate-400/20 bg-slate-900/75 p-4">
           <p class="text-xs uppercase tracking-widest text-white/60">My Listings</p>
-          <p class="font-display text-2xl mt-1">{{ ownCount }}</p>
+          <p class="mt-1 font-display text-2xl">{{ ownCount }}</p>
         </div>
-        <div class="border border-white/10 bg-cyan-950/70 p-4">
+        <div class="border border-slate-400/20 bg-slate-900/75 p-4">
           <p class="text-xs uppercase tracking-widest text-white/60">Pending Visits</p>
-          <p class="font-display text-2xl mt-1">{{ pendingBookingsCount }}</p>
+          <p class="mt-1 font-display text-2xl">{{ pendingBookingsCount }}</p>
         </div>
-        <div class="border border-white/10 bg-cyan-950/70 p-4">
+        <div class="border border-slate-400/20 bg-slate-900/75 p-4">
           <p class="text-xs uppercase tracking-widest text-white/60">Total Earnings</p>
-          <p class="font-display text-2xl mt-1">{{ formatMoney(earnings.total_earnings) }}</p>
+          <p class="mt-1 font-display text-2xl">{{ formatMoney(earnings.total_earnings) }}</p>
         </div>
       </div>
 
-      <div class="bg-emerald-950/80 border border-white/10 rounded-lg p-6 space-y-4">
+      <div class="rounded-lg border border-slate-400/20 bg-slate-900/75 p-6 space-y-4">
         <div class="grid gap-4 lg:grid-cols-[1fr,220px,220px,220px]">
           <input
             v-model.trim="filters.query"
             type="text"
-            placeholder="Search by title, city, state, agency"
-            class="form-input h-11 px-3 bg-white/95 text-emerald-950"
+            placeholder="Search listings, city, state or agency"
+            class="form-input h-11 border-slate-300/25 bg-slate-900/80 px-3 text-slate-100 placeholder:text-slate-500"
           />
-          <select v-model="filters.type" class="form-select h-11 px-3 bg-white/95 text-emerald-950">
+          <select v-model="filters.type" class="form-select h-11 border-slate-300/25 bg-slate-900/80 px-3 text-slate-100">
             <option value="">All Types</option>
             <option value="shortlet">Shortlet</option>
             <option value="apartment">Apartment</option>
@@ -45,7 +57,7 @@
             <option value="land">Land</option>
             <option value="office">Office</option>
           </select>
-          <select v-model="filters.ownership" class="form-select h-11 px-3 bg-white/95 text-emerald-950">
+          <select v-model="filters.ownership" class="form-select h-11 border-slate-300/25 bg-slate-900/80 px-3 text-slate-100">
             <option value="all">All Listings</option>
             <option value="mine">My Listings</option>
             <option value="network">Other Agents</option>
@@ -54,16 +66,16 @@
             v-model.number="filters.maxPrice"
             type="number"
             min="0"
-            placeholder="Max Price"
-            class="form-input h-11 px-3 bg-white/95 text-emerald-950"
+            placeholder="Max price"
+            class="form-input h-11 border-slate-300/25 bg-slate-900/80 px-3 text-slate-100 placeholder:text-slate-500"
           />
         </div>
       </div>
 
-      <div v-if="loading" class="bg-emerald-950/60 border border-white/10 p-5 text-sm text-white/70">
+      <div v-if="loading" class="border border-slate-400/20 bg-slate-900/70 p-5 text-sm text-white/70">
         Loading marketplace listings...
       </div>
-      <div v-else-if="error" class="bg-red-900/40 border border-red-200/20 p-5 text-sm text-red-100">
+      <div v-else-if="error" class="border border-red-200/20 bg-red-900/40 p-5 text-sm text-red-100">
         {{ error }}
       </div>
 
@@ -71,29 +83,37 @@
         <article
           v-for="listing in filteredListings"
           :key="listing.clientKey"
-          class="bg-white text-emerald-950 border border-black/10 shadow-lg overflow-hidden"
+          class="cursor-pointer overflow-hidden border border-slate-400/25 bg-slate-900/80 text-slate-100 shadow-lg transition-shadow hover:border-amber-500/40 hover:shadow-2xl"
+          @click="openPropertyDetails(listing)"
         >
           <div>
             <img :src="listing.thumbnail" :alt="listing.title" class="h-48 w-full object-cover" />
           </div>
-          <div class="p-5 space-y-3">
+          <div class="space-y-3 p-5">
             <div class="flex items-center justify-between gap-3">
               <span
-                class="text-[10px] uppercase tracking-widest px-2 py-1 border"
-                :class="listing.isMine ? 'border-cyan-700 text-cyan-700' : 'border-emerald-900/30 text-emerald-900/70'"
+                class="border px-2 py-1 text-[10px] uppercase tracking-widest"
+                :class="listing.isMine ? 'border-amber-400/80 text-amber-200' : 'border-slate-300/35 text-slate-300'"
               >
                 {{ listing.isMine ? 'My Listing' : 'Network Listing' }}
               </span>
-              <span class="text-xs uppercase tracking-widest text-emerald-900/50">{{ listing.propertyType }}</span>
+              <span class="text-xs uppercase tracking-widest text-slate-400">{{ listing.propertyType }}</span>
             </div>
-            <p class="font-display text-2xl">{{ formatMoney(listing.price) }}</p>
+            <p class="flex items-center gap-2 font-display text-2xl">
+              <span>{{ formatMoney(listing.price) }}</span>
+            </p>
             <p class="font-semibold">{{ listing.title || 'Property listing' }}</p>
-            <p class="text-sm text-emerald-900/70">{{ listing.location }}</p>
-            <p class="text-xs text-emerald-900/60">Agency: {{ listing.agencyName || 'Unknown' }}</p>
-            <div class="grid grid-cols-3 gap-2 text-[10px] uppercase tracking-widest text-emerald-900/60">
-              <div>Bed<br /><span class="text-emerald-900">{{ listing.bed || '-' }}</span></div>
-              <div>Bath<br /><span class="text-emerald-900">{{ listing.bath || '-' }}</span></div>
-              <div>Size<br /><span class="text-emerald-900">{{ listing.asize || '-' }}</span></div>
+            <p class="flex items-center gap-2 text-sm text-slate-300">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-300" fill="currentColor" aria-hidden="true">
+                <path d="M12 2a7 7 0 0 1 7 7c0 5.2-7 13-7 13S5 14.2 5 9a7 7 0 0 1 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6a2.5 2.5 0 0 0 0 5.5Z"/>
+              </svg>
+              <span>{{ listing.location }}</span>
+            </p>
+            <p class="text-xs text-slate-400">Agency: {{ listing.agencyName || 'Unknown' }}</p>
+            <div class="grid grid-cols-3 gap-2 text-[10px] uppercase tracking-widest text-slate-400">
+              <div>Bed<br /><span class="text-slate-100">{{ listing.bed || '-' }}</span></div>
+              <div>Bath<br /><span class="text-slate-100">{{ listing.bath || '-' }}</span></div>
+              <div>Size<br /><span class="text-slate-100">{{ listing.asize || '-' }}</span></div>
             </div>
           </div>
         </article>
@@ -104,12 +124,14 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import api from '@/lib/api'
 
 const loading = ref(false)
 const error = ref('')
 const listings = ref([])
 const agentId = ref(null)
+const router = useRouter()
 const dashboardBookings = ref([])
 const earnings = reactive({
   total_earnings: 0
@@ -123,10 +145,26 @@ const filters = reactive({
 })
 
 function normalizeImage(path) {
-  if (!path) return '/uploads/properties/1761862624_DJI_0253-2-scaled.webp'
-  if (String(path).startsWith('http')) return path
-  if (String(path).startsWith('/')) return path
-  return `/${path}`
+  const raw = String(path || '').trim()
+  if (!raw) return '/uploads/properties/1761862624_DJI_0253-2-scaled.webp'
+  const cleaned = raw.replace(/\\/g, '/')
+  if (cleaned.startsWith('http')) return cleaned
+  if (cleaned.startsWith('/')) return cleaned
+  return `/${cleaned}`
+}
+
+function toImageArray(value) {
+  if (Array.isArray(value)) return value.filter(Boolean)
+  if (typeof value !== 'string') return []
+  const raw = value.trim()
+  if (!raw) return []
+  try {
+    const parsed = JSON.parse(raw)
+    if (Array.isArray(parsed)) return parsed.filter(Boolean)
+  } catch (err) {
+    // fallback for comma-separated values
+  }
+  return raw.split(',').map((entry) => entry.trim()).filter(Boolean)
 }
 
 function normalizeType(type) {
@@ -138,6 +176,19 @@ function formatMoney(value) {
   return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(
     Number.isNaN(amount) ? 0 : amount
   )
+}
+
+function openPropertyDetails(listing) {
+  if (!listing?.id) return
+  router.push(`/property/${listing.id}`)
+}
+
+function goBack() {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+  router.push('/dashboard/agent')
 }
 
 const ownCount = computed(() => listings.value.filter((item) => item.isMine).length)
@@ -189,7 +240,7 @@ async function loadListings() {
 
     const rows = res.data?.data?.properties || []
     listings.value = rows.map((item, index) => {
-      const rawImages = Array.isArray(item.images) ? item.images : []
+      const rawImages = toImageArray(item.images)
       return {
         clientKey: `${item.id}-${index}`,
         id: Number(item.id),
@@ -204,7 +255,7 @@ async function loadListings() {
         bed: item.bed,
         bath: item.bath,
         asize: item.asize,
-        thumbnail: normalizeImage(item.thumbnail || rawImages[0]),
+        thumbnail: normalizeImage(item.thumbnail || rawImages[0] || item.image),
         isMine: agentId.value && Number(item.agent_id || 0) === Number(agentId.value)
       }
     })

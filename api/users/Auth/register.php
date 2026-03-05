@@ -30,13 +30,16 @@ if (getenv('REQUEST_METHOD') == $api_method) {
         $state = isset($_POST["state"]) ? $utility_class_call->clean_user_data($_POST["state"], 1) : '';
         $postal_code = isset($_POST["postal_code"]) ? $utility_class_call->clean_user_data($_POST["postal_code"], 1) : '';
         $streetname = isset($_POST["streetname"]) ? $utility_class_call->clean_user_data($_POST["streetname"], 1) : '';
+        $investment_budget_range = isset($_POST["investment_budget_range"]) ? $utility_class_call->clean_user_data($_POST["investment_budget_range"], 1) : '';
+        $preferred_locations = isset($_POST["preferred_locations"]) ? $utility_class_call->clean_user_data($_POST["preferred_locations"], 1) : '';
+        $property_interest_raw = $_POST["property_interest"] ?? ($_POST["property_type_interest"] ?? '');
+        $property_interest = $utility_class_call->clean_user_data($property_interest_raw, 1);
 
         // Validate required inputs
         if (
             $utility_class_call->input_is_invalid($fname) ||
             $utility_class_call->input_is_invalid($lname) ||
             $utility_class_call->input_is_invalid($email) ||
-            $utility_class_call->input_is_invalid($phoneno) ||
             $utility_class_call->input_is_invalid($password)
         ) {
             $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
@@ -94,7 +97,10 @@ if (getenv('REQUEST_METHOD') == $api_method) {
                 'city' => $city,
                 'state' => $state,
                 'postal_code' => $postal_code,
-                'streetname' => $streetname
+                'streetname' => $streetname,
+                'investment_budget_range' => $investment_budget_range,
+                'preferred_locations' => $preferred_locations,
+                'property_type_interest' => $property_interest
             ]);
 
             if ($InsertResponseData > 0) {
@@ -115,7 +121,7 @@ if (getenv('REQUEST_METHOD') == $api_method) {
 
                 // Generate JWT token
                 $tokentype = 1;
-                $accesstoken = $api_status_call->getTokenToSendAPI($User_pub_Key, $tokentype);
+                $accesstoken = $api_status_call->getTokenToSendAPI($User_pub_Key, $tokentype, 3);
 
                 $maindata = [
                     'access_token' => $accesstoken,

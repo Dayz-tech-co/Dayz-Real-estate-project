@@ -61,6 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === $api_method) {
             $api_status_code_class_call->respondBadRequest($validStatuses, $status, API_User_Response::$invalidpropertystatus);
         }
 
+        if (isset($updateData['property_category'])) {
+            $updateData['property_category'] = strtolower(trim($updateData['property_category']));
+            $allowedPropertyCategories = ['sale', 'rent', 'lease'];
+            if (!in_array($updateData['property_category'], $allowedPropertyCategories, true)) {
+                $api_status_code_class_call->respondBadRequest("Invalid property category. Allowed categories: sale, rent, lease.");
+            }
+        }
+
         if (empty($property_id)) {
             $api_status_code_class_call->respondBadRequest(API_User_Response::$propertyidrequired);
         }

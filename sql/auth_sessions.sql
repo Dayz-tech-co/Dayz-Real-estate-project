@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `auth_sessions` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `jti` VARCHAR(64) NOT NULL,
+  `user_pubkey` VARCHAR(255) NOT NULL,
+  `forwho` TINYINT NOT NULL DEFAULT 0 COMMENT '1=admin,2=agent,3=user',
+  `verifiedtoken` TINYINT NOT NULL DEFAULT 1,
+  `ipaddress` VARCHAR(64) DEFAULT NULL,
+  `user_agent` VARCHAR(255) DEFAULT NULL,
+  `last_seen_at` DATETIME DEFAULT NULL,
+  `expires_at` DATETIME NOT NULL,
+  `revoked_at` DATETIME DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_auth_sessions_jti` (`jti`),
+  KEY `idx_auth_sessions_user_pubkey` (`user_pubkey`),
+  KEY `idx_auth_sessions_forwho` (`forwho`),
+  KEY `idx_auth_sessions_expires_at` (`expires_at`),
+  KEY `idx_auth_sessions_revoked_at` (`revoked_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

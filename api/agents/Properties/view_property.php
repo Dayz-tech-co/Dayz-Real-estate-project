@@ -50,11 +50,11 @@ if (getenv('REQUEST_METHOD') === $api_method) {
         //Fetch the property for this agent
         $property = $db_call_class->selectRows(
             "properties",
-            "id, title, description, property_type, property_category, bed, bath, balc, hall, kitc, floor, asize, price, feature, city, state, location, verified, sold_status, status, images, created_at, updated_at",
+            "id, title, description, property_type, property_category, bed, bath, balc, hall, kitc, floor, asize, price, feature, city, state, location, thumbnail, verified, sold_status, status, images, created_at, updated_at",
             [[
                 ['column' => 'id', 'operator' => '=', 'value' => $property_id],
                 ['column' => 'agent_id', 'operator' => '=', 'value' => $agent_id],
-                ['column' => 'is_deleted', 'operator' => '=', 'value' => 0]
+                ['column' => 'deleted_at', 'operator' => 'IS', 'value' => null]
             ]],
             ['limit' => 1]
         );
@@ -89,6 +89,7 @@ if (getenv('REQUEST_METHOD') === $api_method) {
             "city"          => $property['city'],
             "state"         => $property['state'],
             "location"      => $property['location'],
+            "thumbnail"     => $property['thumbnail'],
             "verified"      => (int)$property['verified'],
             "sold_status"   => $property['sold_status'],
             "status"        => $property['status'],

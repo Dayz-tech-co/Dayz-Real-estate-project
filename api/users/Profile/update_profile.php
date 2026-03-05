@@ -59,6 +59,9 @@ try {
     $address      = isset($_POST["address"]) ? $utility_class_call->clean_user_data($_POST["address"], 1) : '';
     $state        = isset($_POST["state"]) ? $utility_class_call->clean_user_data($_POST["state"], 1) : '';
     $city         = isset($_POST["city"]) ? $utility_class_call->clean_user_data($_POST["city"], 1) : '';
+    $investment_budget_range = isset($_POST["investment_budget_range"]) ? $utility_class_call->clean_user_data($_POST["investment_budget_range"], 1) : '';
+    $preferred_locations = isset($_POST["preferred_locations"]) ? $utility_class_call->clean_user_data($_POST["preferred_locations"], 1) : '';
+    $property_type_interest = isset($_POST["property_type_interest"]) ? $utility_class_call->clean_user_data($_POST["property_type_interest"], 1) : '';
 
     //Check if at least one field was sent
     if (
@@ -69,7 +72,10 @@ try {
         $utility_class_call->input_is_invalid($country) &&
         $utility_class_call->input_is_invalid($address) &&
         $utility_class_call->input_is_invalid($state) &&
-        $utility_class_call->input_is_invalid($city)
+        $utility_class_call->input_is_invalid($city) &&
+        $utility_class_call->input_is_invalid($investment_budget_range) &&
+        $utility_class_call->input_is_invalid($preferred_locations) &&
+        $utility_class_call->input_is_invalid($property_type_interest)
     ) {
         $api_status_call->respondBadRequest(API_User_Response::$request_body_invalid);
     }
@@ -107,6 +113,9 @@ try {
     if (!$utility_class_call->input_is_invalid($address)) $update_fields['address'] = $address;
     if (!$utility_class_call->input_is_invalid($state)) $update_fields['state'] = $state;
     if (!$utility_class_call->input_is_invalid($city)) $update_fields['city'] = $city;
+    if (!$utility_class_call->input_is_invalid($investment_budget_range)) $update_fields['investment_budget_range'] = $investment_budget_range;
+    if (!$utility_class_call->input_is_invalid($preferred_locations)) $update_fields['preferred_locations'] = $preferred_locations;
+    if (!$utility_class_call->input_is_invalid($property_type_interest)) $update_fields['property_type_interest'] = $property_type_interest;
 
     // No valid field check
     if (empty($update_fields)) {

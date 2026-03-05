@@ -1,56 +1,67 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center px-4 py-16">
-    <div class="premium-card shadow-2xl rounded-sm w-full max-w-xl p-10">
-      <div class="text-center mb-8">
-        <img
-          src="/images/DayzLogo.svg"
-          alt="Dayz"
-          class="h-24 w-auto object-contain mx-auto mb-4 bg-black/60 p-3 rounded-sm ring-1 ring-white/10"
-        />
-        <span class="text-gold-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">Recovery</span>
-        <h1 class="text-emerald-900 text-3xl font-display font-bold mb-3">Forgot Password</h1>
-        <p class="text-emerald-800/60">Request an OTP to reset your password.</p>
+  <AuthLayout>
+    <EmeraldCard>
+      <div class="mb-7 text-center">
+        <h1 class="text-3xl font-semibold tracking-[0.2em] text-dayz-gold">RECOVERY</h1>
+        <p class="mt-2 text-[11px] uppercase tracking-[0.2em] text-dayz-gold/80">Reset Access</p>
       </div>
 
-      <form @submit.prevent="submit" class="grid gap-6">
-        <label class="block">
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Recovery Method</span>
-          <select v-model="form.type" class="form-select block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4">
-            <option value="email">Email</option>
-            <option value="phone">Phone</option>
-          </select>
-        </label>
+      <form class="space-y-4" @submit.prevent="submit">
+        <RoleToggle v-model="role" />
 
-        <label class="block" v-if="form.type === 'email'">
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Email</span>
-          <input v-model="form.email" type="email" class="form-input block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4" placeholder="you@email.com" />
-        </label>
+        <div class="grid grid-cols-2 gap-2 rounded border border-dayz-border-muted bg-[#0d1714] p-1 text-xs uppercase tracking-[0.14em]">
+          <button type="button" class="h-10 transition-colors" :class="form.type === 'email' ? 'border border-dayz-gold bg-dayz-emerald text-dayz-gold' : 'text-slate-300'" @click="form.type = 'email'">
+            Email
+          </button>
+          <button type="button" class="h-10 transition-colors" :class="form.type === 'phone' ? 'border border-dayz-gold bg-dayz-emerald text-dayz-gold' : 'text-slate-300'" @click="form.type = 'phone'">
+            Phone
+          </button>
+        </div>
 
-        <label class="block" v-else>
-          <span class="block text-emerald-900 text-[10px] font-bold uppercase tracking-widest mb-2">Phone</span>
-          <input v-model="form.phoneno" type="text" class="form-input block w-full border-emerald-900/10 bg-emerald-50/30 h-12 px-4" placeholder="+1234567890" />
-        </label>
+        <LuxuryInput
+          v-if="form.type === 'email'"
+          v-model="form.email"
+          label="Email"
+          icon="email"
+          type="email"
+          placeholder="you@email.com"
+          required
+        />
 
-        <div v-if="error" class="text-sm text-red-600">{{ error }}</div>
-        <div v-if="message" class="text-sm text-emerald-700">{{ message }}</div>
+        <LuxuryInput
+          v-else
+          v-model="form.phoneno"
+          label="Phone"
+          icon="phone"
+          placeholder="+234 800 000 0000"
+          required
+        />
 
-        <button :disabled="loading" type="submit" class="emerald-gradient-bg text-white h-14 text-xs font-bold uppercase tracking-[0.3em] hover:brightness-110 shadow-xl transition-all disabled:opacity-60">
-          {{ loading ? 'Sending...' : 'Send OTP' }}
-        </button>
+        <p v-if="error" class="text-sm text-red-300">{{ error }}</p>
+        <p v-if="message" class="text-sm text-emerald-300">{{ message }}</p>
+
+        <LuxuryButton text="Send OTP" loading-text="Sending..." :loading="loading" />
       </form>
-    </div>
-  </div>
+    </EmeraldCard>
+  </AuthLayout>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import api from '@/lib/api'
+import AuthLayout from '@/components/auth/AuthLayout.vue'
+import EmeraldCard from '@/components/auth/EmeraldCard.vue'
+import RoleToggle from '@/components/auth/RoleToggle.vue'
+import LuxuryInput from '@/components/auth/LuxuryInput.vue'
+import LuxuryButton from '@/components/auth/LuxuryButton.vue'
 
 const router = useRouter()
+const route = useRoute()
 const loading = ref(false)
 const error = ref('')
 const message = ref('')
+const role = ref(['agent', 'user'].includes(String(route.query.role || '').toLowerCase()) ? String(route.query.role).toLowerCase() : 'user')
 
 const form = reactive({
   type: 'email',
@@ -78,10 +89,11 @@ async function submit() {
     if (form.email) payload.append('email', form.email)
     if (form.phoneno) payload.append('phoneno', form.phoneno)
 
-    const res = await api.post('/api/users/Auth/forget_password.php', payload)
+    const endpoint = role.value === 'agent' ? '/api/agents/Auth/forget_password.php' : '/api/users/Auth/forget_password.php'
+    const res = await api.post(endpoint, payload)
     if (res.data?.status) {
       message.value = res.data?.text || 'OTP sent.'
-      setTimeout(() => router.push('/reset-password'), 400)
+      setTimeout(() => router.push(`/reset-password?role=${role.value}`), 400)
     } else {
       error.value = res.data?.text || 'Unable to send OTP.'
     }

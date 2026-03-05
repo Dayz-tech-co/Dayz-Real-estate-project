@@ -37,6 +37,7 @@ try {
             [
                 ["column" => "otp", "operator" => "=", "value" => $otp],
                 ["column" => "verification_type", "operator" => "=", "value" => 3],
+                ["column" => "forwho", "operator" => "=", "value" => 3],
                 ["column" => "status", "operator" => "=", "value" => 1]
             ]
         ]

@@ -1,0 +1,2 @@
+ALTER TABLE `agents`
+  ADD COLUMN `full_name` VARCHAR(160) NULL AFTER `id`;

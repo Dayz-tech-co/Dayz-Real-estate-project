@@ -117,17 +117,8 @@ try {
 
         $sent = $mail_sms_call->sendUserMail($subject, $destination, $messageText, $messageHTML);
     } else {
-        // Placeholder for SMS
-        $subject = "OTP Verification";
-        $msgintext = Mail_SMS_Responses::sendOTPText($verificationCode);
-        $messageinhtml = "
-            <h3>OTP Verification</h3>
-            <p>Your verification code is <strong>$verificationCode</strong>.</p>
-            <p>Please use this code to complete your verification process.</p>
-            <br>
-            <p>Thank you,<br>The " . $_ENV['APP_NAME'] . " Team</p>
-        ";
-        $sent = $mail_sms_call->sendUserMail($subject, $destination, $msgintext, $messageinhtml);
+        $smsText = Mail_SMS_Responses::sendOTPText($verificationCode);
+        $sent = $mail_sms_call->sendUserSMSOTP($destination, $smsText);
     }
 
     //Final response

@@ -11,36 +11,76 @@ class Mail_SMS_Responses extends DB_Connect
 {
   public static function sendThePhpMailerMail($subject, $emailTo,  $text, $message, $toname)
   {
-    try {
-      $mail = new \PHPMailer\PHPMailer\PHPMailer;
-      $mail->isSMTP();
-      $mail->SMTPDebug = 0;
-      $mail->Timeout = 30; // 30 second timeout
+    $host = isset($_ENV['MAILHOST']) ? trim($_ENV['MAILHOST']) : '';
+    $port = isset($_ENV['MAILPORT']) ? (int)$_ENV['MAILPORT'] : 587;
+    $encryption = strtolower(trim(isset($_ENV['MAIL_ENCRYPTION']) ? $_ENV['MAIL_ENCRYPTION'] : 'tls'));
 
-      $mail->Host = $_ENV['MAILHOST'];
-      $mail->SMTPAuth = true;
-      $mail->Port = $_ENV['MAILPORT'];
-      $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-      $mail->Username = $_ENV['MAILSENDER'];
-      $mail->Password = $_ENV['MAILSENDERPASS'];
-      $mail->setFrom($_ENV['MAILSENDER'], $_ENV['APP_NAME']);
-      $mail->addReplyTo($_ENV['MAILSENDER'], $_ENV['APP_NAME']);
-      $mail->addAddress($emailTo, $toname);
-      $mail->Subject = $subject;
-      $mail->Body = $message;
-      $mail->AltBody = $text;
+    $attempts = [
+      [
+        'host' => $host,
+        'port' => $port,
+        'encryption' => $encryption
+      ]
+    ];
 
-      if (!$mail->send()) {
-        // Log the error instead of echoing
-        self::logEmailError($emailTo, $subject, $mail->ErrorInfo);
-        return false;
-      } else {
-        return true;
+    // For Gmail, retry with the alternative secure transport if first attempt fails.
+    if (strtolower($host) === 'smtp.gmail.com') {
+      if ($port !== 465 || $encryption !== 'ssl') {
+        $attempts[] = [
+          'host' => $host,
+          'port' => 465,
+          'encryption' => 'ssl'
+        ];
       }
-    } catch (\Exception $e) {
-      self::logEmailError($emailTo, $subject, $e->getMessage());
-      return false;
+      if ($port !== 587 || ($encryption !== 'tls' && $encryption !== 'starttls')) {
+        $attempts[] = [
+          'host' => $host,
+          'port' => 587,
+          'encryption' => 'tls'
+        ];
+      }
     }
+
+    $errors = [];
+
+    foreach ($attempts as $attempt) {
+      try {
+        $mail = new \PHPMailer\PHPMailer\PHPMailer;
+        $mail->isSMTP();
+        $mail->SMTPDebug = 0;
+        $mail->Timeout = 45;
+        $mail->SMTPAuth = true;
+        $mail->SMTPAutoTLS = true;
+
+        $mail->Host = $attempt['host'];
+        $mail->Port = (int)$attempt['port'];
+        $mail->Username = $_ENV['MAILSENDER'];
+        $mail->Password = $_ENV['MAILSENDERPASS'];
+        $mail->SMTPSecure = ($attempt['encryption'] === 'ssl' || (int)$attempt['port'] === 465)
+          ? \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS
+          : \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+
+        $mail->setFrom($_ENV['MAILSENDER'], $_ENV['APP_NAME']);
+        $mail->addReplyTo($_ENV['MAILSENDER'], $_ENV['APP_NAME']);
+        $mail->addAddress($emailTo, $toname);
+        $mail->Subject = $subject;
+        $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Body = $message;
+        $mail->AltBody = $text;
+
+        if ($mail->send()) {
+          return true;
+        }
+
+        $errors[] = $attempt['host'] . ':' . $attempt['port'] . ' (' . $attempt['encryption'] . ') => ' . $mail->ErrorInfo;
+      } catch (\Exception $e) {
+        $errors[] = $attempt['host'] . ':' . $attempt['port'] . ' (' . $attempt['encryption'] . ') => ' . $e->getMessage();
+      }
+    }
+
+    self::logEmailError($emailTo, $subject, implode(' | ', $errors));
+    return false;
   }
 
   /**

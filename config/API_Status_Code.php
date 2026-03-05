@@ -7,6 +7,7 @@ use Firebase\JWT\Key;
 
 class API_Status_Code
 {
+    private static $authSessionsFeatureReady = null;
     /* Status Code 201 – This is the status code that confirms that the request was successful and, as a result, a new resource was created. 
     // Typically, this is the status code that is sent after a POST/PUT request.
     // 100	Continue	[RFC7231, Section 6.2.1]
@@ -281,7 +282,7 @@ class API_Status_Code
     }
     // Generated a unique pub key for all users
     // Generate a unique JWT access token for any user type (Admin, Agent, or User)
-    function getTokenToSendAPI($userPubkey, $verifiedtoken = 1)
+    function getTokenToSendAPI($userPubkey, $verifiedtoken = 1, $whocalled = 0)
     {
         try {
             // Decide which key to use based on verification type
@@ -298,6 +299,7 @@ class API_Status_Code
             // Issue and expiration time
             $issuedAt = new \DateTimeImmutable();
             $expire = $issuedAt->modify("+$minutetoend minutes")->getTimestamp();
+            $jti = bin2hex(random_bytes(16));
 
             // Token payload
             $data = [
@@ -306,10 +308,13 @@ class API_Status_Code
                 'nbf' => $issuedAt->getTimestamp(),  // Not before
                 'exp' => $expire,                    // Expiration
                 'usertoken' => $userPubkey,          // Unique public key per user
+                'jti' => $jti,                       // Session identifier for revoke/logout
+                'forwho' => (int)$whocalled,         // 1=Admin, 2=Agent, 3=User
             ];
 
             // Encode the array to a JWT string
             $auttokn = JWT::encode($data, $companyprivateKey, 'HS512');
+            $this->persistAuthSession($jti, $userPubkey, (int)$verifiedtoken, (int)$whocalled, $expire);
             return $auttokn;
         } catch (\Exception $e) {
             self::respondInternalError(Utility_Functions::get_details_from_exception($e));
@@ -359,12 +364,22 @@ class API_Status_Code
                 $token->iss !== $serverName ||
                 $token->nbf > $now->getTimestamp() ||
                 $token->exp < $now->getTimestamp() ||
-                Utility_Functions::input_is_invalid($token->usertoken)
+                Utility_Functions::input_is_invalid($token->usertoken) ||
+                Utility_Functions::input_is_invalid($token->jti)
             ) {
                 self::respondUnauthorized();
             }
 
             $usertoken = $token->usertoken;
+            $jti = $token->jti;
+
+            if ((int)$whocalled > 0 && isset($token->forwho) && (int)$token->forwho > 0 && (int)$token->forwho !== (int)$whocalled) {
+                self::respondUnauthorized();
+            }
+
+            if ($this->isAuthSessionsFeatureReady() && !$this->isAuthSessionActive($jti, $usertoken)) {
+                self::respondUnauthorized();
+            }
 
             // Limit API usage frequency (per userPubKey)
             if (self::userHasCalledAPIToMaxLimit($usertoken, 300, 60)) {
@@ -416,6 +431,202 @@ class API_Status_Code
             return true;
         }
         return false;
+    }
+
+    private function persistAuthSession($jti, $userPubkey, $verifiedtoken, $forwho, $expTimestamp)
+    {
+        try {
+            if (!$this->isAuthSessionsFeatureReady()) {
+                return;
+            }
+
+            $utility = new Utility_Functions();
+            $ipaddress = $utility->getIpAddress();
+            $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            $expiresAt = date('Y-m-d H:i:s', (int)$expTimestamp);
+            $now = date('Y-m-d H:i:s');
+
+            $existing = DB_Calls_Functions::selectRows(
+                "auth_sessions",
+                "id",
+                [[
+                    ['column' => 'jti', 'operator' => '=', 'value' => $jti]
+                ]],
+                ['limit' => 1]
+            );
+
+            $payload = [
+                "jti" => $jti,
+                "user_pubkey" => $userPubkey,
+                "forwho" => (int)$forwho,
+                "verifiedtoken" => (int)$verifiedtoken,
+                "ipaddress" => substr((string)$ipaddress, 0, 64),
+                "user_agent" => substr((string)$userAgent, 0, 255),
+                "last_seen_at" => $now,
+                "expires_at" => $expiresAt,
+                "revoked_at" => null
+            ];
+
+            if (Utility_Functions::input_is_invalid($existing)) {
+                DB_Calls_Functions::insertRow("auth_sessions", $payload);
+                return;
+            }
+
+            DB_Calls_Functions::updateRows(
+                "auth_sessions",
+                $payload,
+                [[
+                    ['column' => 'jti', 'operator' => '=', 'value' => $jti]
+                ]],
+                ['limit' => 1]
+            );
+        } catch (\Exception $e) {
+            // do not block token issuance if session logging fails
+        }
+    }
+
+    private function isAuthSessionActive($jti, $userPubkey)
+    {
+        try {
+            if (!$this->isAuthSessionsFeatureReady()) {
+                return true;
+            }
+
+            $rows = DB_Calls_Functions::selectRows(
+                "auth_sessions",
+                "id, expires_at, revoked_at",
+                [[
+                    ['column' => 'jti', 'operator' => '=', 'value' => $jti],
+                    ['column' => 'user_pubkey', 'operator' => '=', 'value' => $userPubkey]
+                ]],
+                ['limit' => 1]
+            );
+
+            if (Utility_Functions::input_is_invalid($rows)) {
+                return false;
+            }
+
+            $session = $rows[0];
+            if (!Utility_Functions::input_is_invalid($session['revoked_at'] ?? null)) {
+                return false;
+            }
+
+            $expiresAt = strtotime((string)($session['expires_at'] ?? ''));
+            if ($expiresAt !== false && $expiresAt < time()) {
+                return false;
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function revokeAuthSessionByJti($jti, $userPubkey)
+    {
+        try {
+            if (!$this->isAuthSessionsFeatureReady()) {
+                return false;
+            }
+
+            $rows = DB_Calls_Functions::selectRows(
+                "auth_sessions",
+                "id, revoked_at",
+                [[
+                    ['column' => 'jti', 'operator' => '=', 'value' => $jti],
+                    ['column' => 'user_pubkey', 'operator' => '=', 'value' => $userPubkey]
+                ]],
+                ['limit' => 1]
+            );
+
+            if (Utility_Functions::input_is_invalid($rows)) {
+                return false;
+            }
+            if (!Utility_Functions::input_is_invalid($rows[0]['revoked_at'] ?? null)) {
+                return false;
+            }
+
+            return DB_Calls_Functions::updateRows(
+                "auth_sessions",
+                ["revoked_at" => date('Y-m-d H:i:s')],
+                [[
+                    ['column' => 'jti', 'operator' => '=', 'value' => $jti],
+                    ['column' => 'user_pubkey', 'operator' => '=', 'value' => $userPubkey]
+                ]],
+                ['limit' => 1]
+            );
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function revokeAllAuthSessionsForUser($userPubkey, $forwho = 0)
+    {
+        try {
+            if (!$this->isAuthSessionsFeatureReady()) {
+                return false;
+            }
+
+            $where = [[
+                ['column' => 'user_pubkey', 'operator' => '=', 'value' => $userPubkey]
+            ]];
+
+            if ((int)$forwho > 0) {
+                $where[0][] = ['column' => 'forwho', 'operator' => '=', 'value' => (int)$forwho];
+            }
+
+            return DB_Calls_Functions::updateRows(
+                "auth_sessions",
+                ["revoked_at" => date('Y-m-d H:i:s')],
+                $where
+            );
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function isAuthSessionsFeatureReady()
+    {
+        if (self::$authSessionsFeatureReady !== null) {
+            return self::$authSessionsFeatureReady;
+        }
+
+        try {
+            if (!DB_Calls_Functions::tableExists("auth_sessions")) {
+                self::$authSessionsFeatureReady = false;
+                return false;
+            }
+
+            $db = DB_Calls_Functions::getDBConnection();
+            if (!$db) {
+                self::$authSessionsFeatureReady = false;
+                return false;
+            }
+
+            $requiredCols = ['jti', 'user_pubkey', 'forwho', 'verifiedtoken', 'expires_at', 'revoked_at'];
+            foreach ($requiredCols as $col) {
+                $stmt = $db->prepare("SHOW COLUMNS FROM `auth_sessions` LIKE ?");
+                if ($stmt === false) {
+                    self::$authSessionsFeatureReady = false;
+                    return false;
+                }
+                $stmt->bind_param("s", $col);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $exists = ($result && $result->num_rows > 0);
+                $stmt->close();
+                if (!$exists) {
+                    self::$authSessionsFeatureReady = false;
+                    return false;
+                }
+            }
+
+            self::$authSessionsFeatureReady = true;
+            return true;
+        } catch (\Exception $e) {
+            self::$authSessionsFeatureReady = false;
+            return false;
+        }
     }
     function prevent_api_race_condition($usertoken)
     {

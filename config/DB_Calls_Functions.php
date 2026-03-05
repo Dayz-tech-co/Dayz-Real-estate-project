@@ -36,7 +36,13 @@ class DB_Calls_Functions  extends DB_Connect
     public static function tableExists(string $tableName): bool
     {
         $db = static::getDB();
-        $stmt = $db->prepare("SHOW TABLES LIKE ?");
+        $stmt = $db->prepare("
+            SELECT 1
+            FROM information_schema.tables
+            WHERE table_schema = DATABASE()
+              AND table_name = ?
+            LIMIT 1
+        ");
         if ($stmt === false) {
             return false;
         }
